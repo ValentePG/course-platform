@@ -1,6 +1,6 @@
-package dev.valente.course_platform.DTOs;
+package dev.valente.course_platform.devs.DTOs;
 
-import dev.valente.course_platform.Devs;
+import dev.valente.course_platform.devs.Devs;
 
 public record DevsResponseDTO(Long id, String name, String password) {
 

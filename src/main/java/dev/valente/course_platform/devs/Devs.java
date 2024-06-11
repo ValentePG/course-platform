@@ -1,6 +1,6 @@
-package dev.valente.course_platform;
+package dev.valente.course_platform.devs;
 
-import dev.valente.course_platform.DTOs.DevsRequestDTO;
+import dev.valente.course_platform.devs.DTOs.DevsRequestDTO;
 import jakarta.persistence.*;
 
 @Table(name = "devs")

@@ -1,9 +1,9 @@
-package dev.valente.course_platform.controller;
+package dev.valente.course_platform.devs.controller;
 
-import dev.valente.course_platform.DTOs.DevsRequestDTO;
-import dev.valente.course_platform.DTOs.DevsResponseDTO;
-import dev.valente.course_platform.Devs;
-import dev.valente.course_platform.repository.DevsRepository;
+import dev.valente.course_platform.devs.DTOs.DevsRequestDTO;
+import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
+import dev.valente.course_platform.devs.Devs;
+import dev.valente.course_platform.devs.repository.DevsRepository;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
