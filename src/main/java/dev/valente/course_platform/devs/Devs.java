@@ -1,18 +1,39 @@
 package dev.valente.course_platform.devs;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.valente.course_platform.content.Content;
 import dev.valente.course_platform.devs.DTOs.DevsRequestDTO;
 import jakarta.persistence.*;
 
-@Table(name = "devs")
-@Entity(name = "devs")
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
+@Table(name = "TB_DEVS")
+@Entity
 public class Devs {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id
+    @GeneratedValue
+    private UUID id;
 
+    @Column(unique = true, nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String password;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(mappedBy = "listOfDevs", fetch = FetchType.LAZY)
+    private Set<Content> contents = new HashSet<>();
+
+    public Set<Content> getContents() {
+        return contents;
+    }
+
+    public void setContents(Set<Content> contents) {
+        this.contents = contents;
+    }
 
     public String getName() {
         return name;
@@ -30,7 +51,7 @@ public class Devs {
         this.password = password;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
