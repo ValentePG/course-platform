@@ -9,6 +9,7 @@ maven-wrapper.properties
 mvnw
 mvnw.cmd
 
+Dockerfile
 
 ### STS ###
 .apt_generated
