@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface DevsRepository extends JpaRepository<Devs, UUID> {
 
+
 }

@@ -62,7 +62,6 @@ public class Devs {
         this.userName = devs.userName();
         this.password = devs.password();
     }
-
     public Devs(){
 
     }

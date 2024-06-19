@@ -28,7 +28,7 @@ public class DevsController {
     }
 
     @GetMapping("/{id}")
-    public DevsResponseDTO findDevById(@PathVariable(name = "id") UUID id) throws Exception {
+    public DevsResponseDTO findDevById(@PathVariable(name = "id") UUID id){
         return this.devsService.findDevById(id);
     }
 

@@ -30,15 +30,12 @@ public class DevsService {
         this.devsRepository.save(devsData);
     }
 
-    public DevsResponseDTO findDevById(UUID id) throws Exception{
+    public DevsResponseDTO findDevById(UUID id){
 
-        Optional<Devs> devsSearched = this.devsRepository.findById(id);
+        Devs devsSearched = this.devsRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("Deu erro ai amigão"));
 
-
-        if(devsSearched.isEmpty()){
-            throw new NullPointerException("Deu erro ai");
-        }
-        return new DevsResponseDTO(devsSearched.get());
+        return new DevsResponseDTO(devsSearched);
     }
 
 
