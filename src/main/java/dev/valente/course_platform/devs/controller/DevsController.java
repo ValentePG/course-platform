@@ -4,34 +4,38 @@ import dev.valente.course_platform.devs.DTOs.DevsRequestDTO;
 import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
 import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.repository.DevsRepository;
+import dev.valente.course_platform.devs.service.DevsService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("devs")
+@RequestMapping("api/devs")
 public class DevsController {
 
-    DevsRepository devsRepository;
+    DevsService devsService;
 
-    public DevsController(DevsRepository devsRepository){
-        this.devsRepository = devsRepository;
+    public DevsController(DevsService devsService){
+        this.devsService = devsService;
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public List<DevsResponseDTO> getAllDevs(){
 
-        List<DevsResponseDTO> devsList = this.devsRepository.findAll().stream().map(DevsResponseDTO::new).toList();
+        return this.devsService.getAllDevs();
+    }
 
-        return devsList;
+    @GetMapping("/{id}")
+    public DevsResponseDTO findDevById(@PathVariable(name = "id") UUID id) throws Exception {
+        return this.devsService.findDevById(id);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public void saveDev(@RequestBody DevsRequestDTO dev){
 
-        Devs devsData = new Devs(dev);
-
-        this.devsRepository.save(devsData);
+        this.devsService.saveDev(dev);
     }
 }

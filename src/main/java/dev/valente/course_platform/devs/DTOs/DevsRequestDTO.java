@@ -1,4 +1,4 @@
 package dev.valente.course_platform.devs.DTOs;
 
-public record DevsRequestDTO(String name, String password) {
+public record DevsRequestDTO(String userName, String password) {
 }

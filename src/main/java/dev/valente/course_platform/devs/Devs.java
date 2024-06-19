@@ -3,9 +3,11 @@ package dev.valente.course_platform.devs;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
 import dev.valente.course_platform.devs.DTOs.DevsRequestDTO;
+import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -18,7 +20,7 @@ public class Devs {
     private UUID id;
 
     @Column(unique = true, nullable = false)
-    private String name;
+    private String userName;
 
     @Column(nullable = false)
     private String password;
@@ -26,6 +28,7 @@ public class Devs {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "listOfDevs", fetch = FetchType.LAZY)
     private Set<Content> contents = new HashSet<>();
+
 
     public Set<Content> getContents() {
         return contents;
@@ -35,12 +38,12 @@ public class Devs {
         this.contents = contents;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -56,7 +59,7 @@ public class Devs {
     }
 
     public Devs(DevsRequestDTO devs){
-        this.name = devs.name();
+        this.userName = devs.userName();
         this.password = devs.password();
     }
 
