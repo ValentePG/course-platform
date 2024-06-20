@@ -19,7 +19,7 @@ public class Devs {
     @GeneratedValue
     private UUID id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String userName;
 
     @Column(nullable = false)
