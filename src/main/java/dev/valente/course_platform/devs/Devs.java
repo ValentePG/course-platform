@@ -19,14 +19,14 @@ public class Devs {
     @GeneratedValue
     private UUID id;
 
-    @Column(nullable = false)
+    @Column
     private String userName;
 
-    @Column(nullable = false)
+    @Column
     private String password;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(mappedBy = "listOfDevs", fetch = FetchType.LAZY)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(mappedBy = "listOfDevs")
     private Set<Content> contents = new HashSet<>();
 
 
@@ -58,9 +58,9 @@ public class Devs {
         return id;
     }
 
-    public Devs(DevsRequestDTO devs){
-        this.userName = devs.userName();
-        this.password = devs.password();
+    public Devs(String userName, String password){
+        this.userName = userName;
+        this.password = password;
     }
     public Devs(){
 

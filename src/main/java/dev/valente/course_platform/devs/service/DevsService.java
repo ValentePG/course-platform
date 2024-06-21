@@ -6,7 +6,6 @@ import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
 import dev.valente.course_platform.devs.exceptions.UserNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,21 +35,23 @@ public class DevsService {
         return new DevsResponseDTO(devsSearched);
     }
 
-    public DevsResponseDTO findDevsByUserName(String userName){
+    public DevsResponseDTO findDevByUserName(String userName){
 
         Devs devsSearched = this.devsRepository.findDevsByUserName(userName).orElseThrow(UserNotFound::new);
 
         return new DevsResponseDTO(devsSearched);
     }
 
-    public void saveDev(DevsRequestDTO dev){
+    public DevsResponseDTO saveDev(DevsRequestDTO dev){
 
-        Devs requestDevData = new Devs(dev);
+        var requestDevData = new Devs(dev.userName(), dev.password());
 
         Optional<Devs> devCreated = this.devsRepository.findDevsByUserName(requestDevData.getUserName());
 
+
         if(devCreated.isEmpty()){
             this.devsRepository.save(requestDevData);
+            return new DevsResponseDTO(requestDevData);
         } else {
             throw new UserNameAlreadyExists();
         }
