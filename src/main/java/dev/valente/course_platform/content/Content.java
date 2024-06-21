@@ -17,13 +17,13 @@ public abstract class Content {
     @GeneratedValue
     protected UUID id;
 
-    @Column(nullable = false)
+    @Column
     protected String description;
 
-    @Column(nullable = false)
+    @Column
     protected int Duration;
 
-    @Column(nullable = false)
+    @Column
     protected Date dataOfCriation;
 
     @ManyToMany

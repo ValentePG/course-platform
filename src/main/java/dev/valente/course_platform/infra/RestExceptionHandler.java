@@ -19,11 +19,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotCreated.class)
     private ResponseEntity<String> userNotCreatedHandler(UserNotCreated exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O usuário não foi criado!");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O usuário não foi criado por falta de dados!");
     }
 
     @ExceptionHandler(UserNotFound.class)
     private ResponseEntity<String> userNotFoundHandler(UserNotFound exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não encontrado!");
     }
+
 }
