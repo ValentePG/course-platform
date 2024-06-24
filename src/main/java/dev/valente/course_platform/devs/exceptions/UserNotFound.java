@@ -9,4 +9,9 @@ public class UserNotFound extends RuntimeException{
     public UserNotFound(String message) {
         super(message);
     }
+
+    @Override
+    public String getMessage() {
+        return "Usuário não encontrado!";
+    }
 }

@@ -10,4 +10,9 @@ public class UserNameAlreadyExists extends RuntimeException{
         super(message);
     }
 
+    @Override
+    public String getMessage() {
+        return "Nome de usuário já existe";
+    }
+
 }

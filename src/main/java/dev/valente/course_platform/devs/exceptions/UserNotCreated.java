@@ -9,4 +9,9 @@ public class UserNotCreated extends RuntimeException {
     public UserNotCreated(String message) {
         super(message);
     }
+
+    @Override
+    public String getMessage() {
+        return "Usuário não criado por falta de dados!";
+    }
 }
