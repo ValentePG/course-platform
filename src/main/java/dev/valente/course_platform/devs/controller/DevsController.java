@@ -1,11 +1,11 @@
 package dev.valente.course_platform.devs.controller;
 
-import dev.valente.course_platform.devs.DTOs.DevsRequestDTO;
+import dev.valente.course_platform.devs.DTOs.DevsCreationDTO;
+import dev.valente.course_platform.devs.DTOs.DevsRenameDTO;
 import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
 import dev.valente.course_platform.devs.service.DevsService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -37,15 +37,32 @@ public class DevsController {
     @GetMapping("/byusername/{userName}")
     public ResponseEntity<DevsResponseDTO> findDevByUserName(@PathVariable(name = "userName") String userName){
 
-        return ResponseEntity.ok(this.devsService.findDevByUserName(userName));
+        return ResponseEntity.ok(this.devsService.findDevByUserName(userName.toUpperCase()));
 
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/register")
-    public ResponseEntity<DevsResponseDTO> saveDev(@RequestBody @Valid DevsRequestDTO dev){
+    public ResponseEntity<DevsResponseDTO> saveDev(@RequestBody @Valid DevsCreationDTO dev){
 
         return ResponseEntity.status(HttpStatus.CREATED).body(this.devsService.saveDev(dev));
 
     }
+
+    @DeleteMapping("/deleteuser/{id}")
+    public ResponseEntity<String> deleteDev(@PathVariable("id") UUID id){
+
+
+        return ResponseEntity.ok(this.devsService.deleteDev(id));
+    }
+
+    @PutMapping("/renameuser/{id}")
+    public ResponseEntity<DevsResponseDTO> renameDev(@PathVariable("id") UUID id,
+                                                     @RequestBody @Valid DevsRenameDTO devsRenameDTO){
+
+
+        return ResponseEntity.ok(this.devsService.renameDev(id, devsRenameDTO));
+    }
+
+
 }

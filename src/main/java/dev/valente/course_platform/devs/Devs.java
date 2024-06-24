@@ -1,13 +1,8 @@
 package dev.valente.course_platform.devs;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
-import dev.valente.course_platform.devs.DTOs.DevsRequestDTO;
-import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
 import jakarta.persistence.*;
-
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
