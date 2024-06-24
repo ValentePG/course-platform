@@ -2,7 +2,6 @@ package dev.valente.course_platform.devs.DTOs;
 
 import dev.valente.course_platform.content.Content;
 import dev.valente.course_platform.devs.Devs;
-
 import java.util.Set;
 import java.util.UUID;
 
