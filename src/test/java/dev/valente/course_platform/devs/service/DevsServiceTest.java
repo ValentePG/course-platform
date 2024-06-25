@@ -17,4 +17,16 @@ class DevsServiceTest {
     @Test
     void findDevById() {
     }
+
+    @Test
+    void findDevByUserName() {
+    }
+
+    @Test
+    void deleteDev() {
+    }
+
+    @Test
+    void renameDev() {
+    }
 }
