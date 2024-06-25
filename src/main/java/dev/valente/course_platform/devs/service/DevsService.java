@@ -8,6 +8,8 @@ import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
 import dev.valente.course_platform.devs.exceptions.UserNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,25 +32,27 @@ public class DevsService {
 
     public DevsResponseDTO findDevById(UUID id) {
 
-        Devs devsSearched = this.devsRepository.findById(id).orElseThrow(
+        Devs devResearched = this.devsRepository.findById(id).orElseThrow(
                 UserNotFound::new);
 
-        return new DevsResponseDTO(devsSearched);
+        return new DevsResponseDTO(devResearched);
     }
 
     public DevsResponseDTO findDevByUserName(String userName) {
 
-        Devs devsSearched = this.devsRepository.findDevsByUserName(userName.toUpperCase()).orElseThrow(
+        Devs devResearched = this.devsRepository.findDevsByUserName(
+                userName.toUpperCase()).orElseThrow(
                 UserNotFound::new);
 
-        return new DevsResponseDTO(devsSearched);
+        return new DevsResponseDTO(devResearched);
     }
 
     public DevsResponseDTO saveDev(DevsCreationDTO dev) {
 
-        Optional<Devs> devCreated = this.devsRepository.findDevsByUserName(dev.userName().toUpperCase());
+        Optional<Devs> devResearched = this.devsRepository.findDevsByUserName(
+                dev.userName().toUpperCase());
 
-        if (devCreated.isEmpty()) {
+        if (devResearched.isEmpty()) {
             var requestDevData = new Devs(dev.userName().toUpperCase(), dev.password());
             this.devsRepository.save(requestDevData);
             return new DevsResponseDTO(requestDevData);
@@ -60,31 +64,64 @@ public class DevsService {
 
     public String deleteDev(UUID id) {
 
-        Optional<Devs> devsSearched = this.devsRepository.findById(id);
+        Optional<Devs> devResearched = this.devsRepository.findById(id);
 
-        if (devsSearched.isEmpty()) {
+        if (devResearched.isEmpty()) {
 
             throw new UserNotFound();
         }
 
-        String userRemoved = "Usuário " + devsSearched.get().getUserName() + " removido";
-        this.devsRepository.delete(devsSearched.get());
+        String userRemoved = "Usuário " + devResearched.get().getUserName() + " removido";
+        this.devsRepository.delete(devResearched.get());
         return userRemoved;
 
     }
 
-    public DevsResponseDTO renameDev(UUID id, DevsRenameDTO devsRenameDTO){
+    public DevsResponseDTO renameDev(String userName, DevsRenameDTO devsRenameDTO){
 
-        Optional<Devs> devsSearched = this.devsRepository.findById(id);
-        if (devsSearched.isEmpty()) {
+        // Posso diminuir este método
+
+        Optional<Devs> devResearchedForRename = this.devsRepository.findDevsByUserName(
+                userName.toUpperCase());
+
+        if(devResearchedForRename.isEmpty()){
             throw new UserNotFound();
         }
 
-        var devsSearched2 = devsSearched.get();
-        devsSearched2.setUserName(devsRenameDTO.userName().toUpperCase());
+        Optional<Devs> devResearchedToCheckIfExists = this.devsRepository.findDevsByUserName(
+                devsRenameDTO.userName().toUpperCase());
 
-        this.devsRepository.save(devsSearched2);
-        return new DevsResponseDTO(devsSearched2);
+        if(devResearchedToCheckIfExists.isPresent()){
+            throw new UserNameAlreadyExists();
+        }
+
+        var devResearched = devResearchedForRename.get();
+        devResearched.setUserName(devsRenameDTO.userName().toUpperCase());
+        this.devsRepository.save(devResearched);
+        return new DevsResponseDTO(devResearched);
     }
+
+//    private Devs findIfDevExists(String userName){
+//
+//        Optional<Devs> devsToResearch = this.devsRepository.findDevsByUserName(
+//                userName.toUpperCase());
+//
+//        if (devsToResearch.isEmpty()) {
+//            throw new UserNotFound();
+//        }
+//
+//        return devsToResearch.get();
+//    }
+//
+//    private Devs findIfDevExists(UUID id){
+//
+//        Optional<Devs> devsToResearch = this.devsRepository.findById(id);
+//
+//        if (devsToResearch.isEmpty()) {
+//            throw new UserNotFound();
+//        }
+//
+//        return devsToResearch.get();
+//    }
 }
 

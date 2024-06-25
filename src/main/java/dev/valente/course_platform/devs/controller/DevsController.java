@@ -27,6 +27,7 @@ public class DevsController {
         return ResponseEntity.ok(this.devsService.getAllDevs());
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/byid/{id}")
     public ResponseEntity<DevsResponseDTO> findDevById(@PathVariable(name = "id") UUID id){
 
@@ -34,6 +35,7 @@ public class DevsController {
 
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/byusername/{userName}")
     public ResponseEntity<DevsResponseDTO> findDevByUserName(@PathVariable(name = "userName") String userName){
 
@@ -49,6 +51,7 @@ public class DevsController {
 
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/deleteuser/{id}")
     public ResponseEntity<String> deleteDev(@PathVariable("id") UUID id){
 
@@ -56,12 +59,13 @@ public class DevsController {
         return ResponseEntity.ok(this.devsService.deleteDev(id));
     }
 
-    @PutMapping("/renameuser/{id}")
-    public ResponseEntity<DevsResponseDTO> renameDev(@PathVariable("id") UUID id,
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("/renameuser/{userName}")
+    public ResponseEntity<DevsResponseDTO> renameDev(@PathVariable("userName") String userName,
                                                      @RequestBody @Valid DevsRenameDTO devsRenameDTO){
 
 
-        return ResponseEntity.ok(this.devsService.renameDev(id, devsRenameDTO));
+        return ResponseEntity.ok(this.devsService.renameDev(userName, devsRenameDTO));
     }
 
 
