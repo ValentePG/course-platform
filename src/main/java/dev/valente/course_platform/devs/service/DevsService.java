@@ -9,7 +9,6 @@ import dev.valente.course_platform.devs.exceptions.UserNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -101,27 +100,5 @@ public class DevsService {
         return new DevsResponseDTO(devResearched);
     }
 
-//    private Devs findIfDevExists(String userName){
-//
-//        Optional<Devs> devsToResearch = this.devsRepository.findDevsByUserName(
-//                userName.toUpperCase());
-//
-//        if (devsToResearch.isEmpty()) {
-//            throw new UserNotFound();
-//        }
-//
-//        return devsToResearch.get();
-//    }
-//
-//    private Devs findIfDevExists(UUID id){
-//
-//        Optional<Devs> devsToResearch = this.devsRepository.findById(id);
-//
-//        if (devsToResearch.isEmpty()) {
-//            throw new UserNotFound();
-//        }
-//
-//        return devsToResearch.get();
-//    }
 }
 
