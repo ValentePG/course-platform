@@ -1,16 +1,17 @@
 package dev.valente.course_platform.content.controller;
 
-
+import dev.valente.course_platform.content.DTOs.ContentCreationRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentResponseDTO;
 import dev.valente.course_platform.content.service.ContentService;
-import dev.valente.course_platform.devs.service.DevsService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/content")
@@ -22,9 +23,25 @@ public class ContentController {
         this.contentService = contentService;
     }
 
-    @PostMapping("registerContent")
-    public ResponseEntity<ContentResponseDTO> createContent(@RequestBody @Valid ContentRequestDTO contentRequestDTO){
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping
+    public List<ContentResponseDTO> listAllCourses(){
+        return this.contentService.getAllCourses();
+    }
 
-        return ResponseEntity.ok(this.contentService.createContent(contentRequestDTO));
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("registercontent")
+    public ResponseEntity<ContentResponseDTO> createContent(@RequestBody @Valid ContentCreationRequestDTO contentCreationRequestDTO){
+
+        return ResponseEntity.ok(this.contentService.createContent(contentCreationRequestDTO));
+    }
+
+
+    //Talvez seja melhor criar isto em outro local
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("registerdevintocontent/{id}")
+    public void registerDevIntoContent(@PathVariable("id") UUID idContent,
+                                       @RequestBody @Valid ContentRequestDTO idUser){
+        this.contentService.addContentIntoDev(idUser, idContent);
     }
 }

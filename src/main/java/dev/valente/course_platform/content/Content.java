@@ -36,10 +36,6 @@ public abstract class Content {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -60,15 +56,9 @@ public abstract class Content {
         return dataOfCriation;
     }
 
-    public void setDataOfCriation(Date dataOfCriation) {
-        this.dataOfCriation = dataOfCriation;
-    }
-
     public Set<Devs> getListOfDevs() {
         return listOfDevs;
     }
 
-    public void setListOfDevs(Set<Devs> listOfDevs) {
-        this.listOfDevs = listOfDevs;
-    }
+
 }
