@@ -24,6 +24,7 @@ public class Course extends Content {
         this.url = url;
     }
 
+
     public String getUrl() {
         return url;
     }

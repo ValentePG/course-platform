@@ -1,6 +1,8 @@
 package dev.valente.course_platform.devs;
 
 import dev.valente.course_platform.content.Content;
+import dev.valente.course_platform.content.concreteContent.course.Course;
+import dev.valente.course_platform.content.concreteContent.mentoring.Mentoring;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +25,6 @@ public class Devs {
 //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "listOfDevs")
     private Set<Content> contents = new HashSet<>();
-
 
     public Set<Content> getContents() {
         return contents;

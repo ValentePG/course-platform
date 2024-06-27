@@ -1,6 +1,6 @@
 package dev.valente.course_platform.devs.service;
 
-import dev.valente.course_platform.devs.DTOs.DevsCreationDTO;
+import dev.valente.course_platform.devs.DTOs.DevsCreationRequestDTO;
 import dev.valente.course_platform.devs.DTOs.DevsRenameDTO;
 import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
 import dev.valente.course_platform.devs.Devs;
@@ -46,7 +46,7 @@ public class DevsService {
         return new DevsResponseDTO(devResearched);
     }
 
-    public DevsResponseDTO saveDev(DevsCreationDTO dev) {
+    public DevsResponseDTO saveDev(DevsCreationRequestDTO dev) {
 
         Optional<Devs> devResearched = this.devsRepository.findDevsByUserName(
                 dev.userName().toUpperCase());
@@ -76,26 +76,26 @@ public class DevsService {
 
     }
 
-    public DevsResponseDTO renameDev(String userName, DevsRenameDTO devsRenameDTO){
+    public DevsResponseDTO renameDev(String devToRename, DevsRenameDTO userName){
 
         // Posso diminuir este método
 
         Optional<Devs> devResearchedForRename = this.devsRepository.findDevsByUserName(
-                userName.toUpperCase());
+                devToRename.toUpperCase());
 
         if(devResearchedForRename.isEmpty()){
             throw new UserNotFound();
         }
 
         Optional<Devs> devResearchedToCheckIfExists = this.devsRepository.findDevsByUserName(
-                devsRenameDTO.userName().toUpperCase());
+                userName.userName().toUpperCase());
 
         if(devResearchedToCheckIfExists.isPresent()){
             throw new UserNameAlreadyExists();
         }
 
         var devResearched = devResearchedForRename.get();
-        devResearched.setUserName(devsRenameDTO.userName().toUpperCase());
+        devResearched.setUserName(userName.userName().toUpperCase());
         this.devsRepository.save(devResearched);
         return new DevsResponseDTO(devResearched);
     }
