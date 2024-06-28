@@ -48,55 +48,45 @@ public class DevsService {
 
     public DevsResponseDTO saveDev(DevsCreationRequestDTO dev) {
 
-        Optional<Devs> devResearched = this.devsRepository.findDevsByUserName(
-                dev.userName().toUpperCase());
+        this.devsRepository.findDevsByUserName(
+                dev.userName().toUpperCase())
+                .ifPresent(alreadyExist -> {
+                    throw new UserNameAlreadyExists("Usuário " + dev.userName() + " já cadastrado!");
+                });
 
-        if (devResearched.isEmpty()) {
-            var requestDevData = new Devs(dev.userName().toUpperCase(), dev.password());
-            this.devsRepository.save(requestDevData);
-            return new DevsResponseDTO(requestDevData);
-        }
-
-        throw new UserNameAlreadyExists();
-
-    }
-
-    public String deleteDev(UUID id) {
-
-        Optional<Devs> devResearched = this.devsRepository.findById(id);
-
-        if (devResearched.isEmpty()) {
-
-            throw new UserNotFound();
-        }
-
-        String userRemoved = "Usuário " + devResearched.get().getUserName() + " removido";
-        this.devsRepository.delete(devResearched.get());
-        return userRemoved;
+        var requestDevData = new Devs(dev.userName().toUpperCase(), dev.password());
+        this.devsRepository.save(requestDevData);
+        return new DevsResponseDTO(requestDevData);
 
     }
 
-    public DevsResponseDTO renameDev(String devToRename, DevsRenameDTO userName){
+    public DevsResponseDTO deleteDev(UUID id) {
+
+        Devs devResearched = this.devsRepository.findById(id).orElseThrow(UserNotFound::new);
+
+        var devsResponseDTO = new DevsResponseDTO(devResearched);
+
+        this.devsRepository.delete(devResearched);
+        return devsResponseDTO;
+
+    }
+
+    public DevsResponseDTO renameDev(String devToRename, DevsRenameDTO newName){
 
         // Posso diminuir este método
 
-        Optional<Devs> devResearchedForRename = this.devsRepository.findDevsByUserName(
-                devToRename.toUpperCase());
+        Devs devResearched = this.devsRepository.findDevsByUserName(
+                devToRename.toUpperCase()).orElseThrow(UserNotFound::new);
 
-        if(devResearchedForRename.isEmpty()){
-            throw new UserNotFound();
-        }
 
-        Optional<Devs> devResearchedToCheckIfExists = this.devsRepository.findDevsByUserName(
-                userName.userName().toUpperCase());
+        this.devsRepository.findDevsByUserName(newName.userName().toUpperCase())
+                .ifPresent(alreadyExists -> {
+                    throw new UserNameAlreadyExists("Username: " + newName.userName() + "Já existe!");
+                });
 
-        if(devResearchedToCheckIfExists.isPresent()){
-            throw new UserNameAlreadyExists();
-        }
-
-        var devResearched = devResearchedForRename.get();
-        devResearched.setUserName(userName.userName().toUpperCase());
+        devResearched.setUserName(newName.userName().toUpperCase());
         this.devsRepository.save(devResearched);
+
         return new DevsResponseDTO(devResearched);
     }
 

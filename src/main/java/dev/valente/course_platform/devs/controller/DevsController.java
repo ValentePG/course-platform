@@ -55,7 +55,7 @@ public class DevsController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/deleteuserbyid/{id}")
-    public ResponseEntity<String> deleteDev(@PathVariable("id") UUID id){
+    public ResponseEntity<DevsResponseDTO> deleteDev(@PathVariable("id") UUID id){
 
 
         return ResponseEntity.ok(this.devsService.deleteDev(id));
