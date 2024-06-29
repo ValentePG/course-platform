@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Table(name = "TB_COURSE")
+//@Table(name = "TB_COURSE")
 @Entity
 public class Course extends Content {
 

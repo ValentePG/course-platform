@@ -84,7 +84,6 @@ public class ContentService {
         testeDev1.getContents().add(teste1);
 
         this.devsRepository.save(testeDev1);
-        this.courseRepository.save(teste1);
 
     }
 }

@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Table(name = "TB_MENTORING")
+//@Table(name = "TB_MENTORING")
 @Entity
 public class Mentoring extends Content {
 
