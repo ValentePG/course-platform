@@ -1,81 +1,91 @@
 package dev.valente.course_platform.devs.service;
 
+
 import dev.valente.course_platform.devs.DTOs.DevsCreationRequestDTO;
 import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
+import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
-import dev.valente.course_platform.devs.exceptions.UserNotCreated;
+import dev.valente.course_platform.devs.repository.DevsRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
+import java.util.Optional;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
+public class DevsServiceTest {
 
-@DataJpaTest
-@ActiveProfiles("test")
-class DevsServiceTest {
+    @Mock
+    DevsRepository devsRepository;
 
-    @MockBean
-    DevsService devsService;
+    @Autowired
+    @InjectMocks
+    private DevsService devsService;
 
     @Test
-    void getAllDevs() {
+    @DisplayName("Should save Dev in DB")
+    void saveDevSuccessfull(){
 
-    }
-
-    @Test
-    @DisplayName("Should save Dev succesfully from DB")
-    void saveDevSucess() {
-
-        // AA
+        // AAA
 
         // Arrange
-        var inputUser = new DevsCreationRequestDTO("GABRIEL", "303030");
-        List<DevsResponseDTO> devs = new ArrayList<>();
+        var devsCreationRequestDTO = new DevsCreationRequestDTO("GABRIEL","303030");
+        var dev = new Devs(devsCreationRequestDTO.userName(), devsCreationRequestDTO.password());
+        when(devsRepository.findDevsByUserName(devsCreationRequestDTO.userName())).thenReturn(Optional.empty());
+        when(devsRepository.save(any(Devs.class))).thenReturn(any(Devs.class));
 
-        // Act
-        var result = this.devsService.saveDev(inputUser);
-        devs.add(result);
+        //Act
+        var result = this.devsService.saveDev(devsCreationRequestDTO);
 
-        // Assert
-        assertEquals(1, devs.size());
 
+        //Asserts
+
+        assertThat(result).isInstanceOf(DevsResponseDTO.class);
+        Assertions.assertEquals(result.userName(), dev.getUserName());
+        verify(devsRepository, times(1)).findDevsByUserName(devsCreationRequestDTO.userName());
+        verify(devsRepository, times(1)).save(any(Devs.class));
     }
 
     @Test
-    @DisplayName("Should return a error")
+    @DisplayName("Should thrown an Exception")
     void saveDevFail() {
-        // AA
-        var devsCreationRequestDTO = new DevsCreationRequestDTO("Gabriel", "303030");
 
-        // PRÓXIMO PASSO //
+        // AAA
 
+        // Arrange
+        var devsCreationRequestDTO = new DevsCreationRequestDTO("GABRIEL","303030");
+        when(devsRepository.findDevsByUserName(devsCreationRequestDTO.userName())).thenThrow(UserNameAlreadyExists.class);
 
-        // Assert
-        Assertions.assertThrows(UserNameAlreadyExists.class, () -> this.devsService.saveDev(devsCreationRequestDTO));
+        //Act
 
+        Exception thrown = Assertions.assertThrows(UserNameAlreadyExists.class,
+                () -> this.devsService.saveDev(devsCreationRequestDTO));
+
+        //Asserts
+
+        Assertions.assertEquals("Nome de usuário já existe", thrown.getMessage());
+        verify(devsRepository, times(1)).findDevsByUserName(devsCreationRequestDTO.userName());
+        verify(devsRepository, times(0)).save(any(Devs.class));
     }
 
     @Test
-    void findDevById() {
-    }
-
-    @Test
-    void findDevByUserName() {
-    }
-
-    @Test
+    @DisplayName("Should delete Dev in DB")
     void deleteDev() {
     }
 
     @Test
+    @DisplayName("Should rename Dev in DB")
     void renameDev() {
     }
+
 }
