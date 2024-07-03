@@ -63,7 +63,7 @@ public class DevsServiceTest {
         // AAA
 
         // Arrange
-        var devsCreationRequestDTO = new DevsCreationRequestDTO("GABRIEL","303030");
+        var devsCreationRequestDTO = new DevsCreationRequestDTO("GABRIEL","5757");
         when(devsRepository.findDevsByUserName(devsCreationRequestDTO.userName())).thenThrow(UserNameAlreadyExists.class);
 
         //Act
@@ -80,8 +80,15 @@ public class DevsServiceTest {
 
     @Test
     @DisplayName("Should delete Dev in DB")
-    void deleteDev() {
+    void deleteDevSuccess() {
     }
+
+    @Test
+    @DisplayName("Should delete Dev in DB")
+    void deleteDevFail() {
+    }
+
+
 
     @Test
     @DisplayName("Should rename Dev in DB")
