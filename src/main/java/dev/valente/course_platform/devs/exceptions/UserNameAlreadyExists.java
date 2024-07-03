@@ -3,7 +3,7 @@ package dev.valente.course_platform.devs.exceptions;
 public class UserNameAlreadyExists extends RuntimeException{
 
     public UserNameAlreadyExists() {
-        super("Nome de usuário já existe");
+        super("Nome de usuário já existe!");
     }
 
     public UserNameAlreadyExists(String message) {
@@ -12,7 +12,7 @@ public class UserNameAlreadyExists extends RuntimeException{
 
     @Override
     public String getMessage() {
-        return "Nome de usuário já existe";
+        return "Nome de usuário já existe!";
     }
 
 }
