@@ -1,16 +1,21 @@
 package dev.valente.course_platform.content.concreteContent.mentoring;
 
 import dev.valente.course_platform.content.Content;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import dev.valente.course_platform.content.concreteContent.bootcamp.Bootcamp;
+import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Set;
 
-//@Table(name = "TB_MENTORING")
+
 @Entity
 public class Mentoring extends Content {
 
     private String url;
+
+
+    @ManyToMany
+    private Set<Bootcamp> bootcamp;
 
     public Mentoring(){
 
@@ -22,6 +27,14 @@ public class Mentoring extends Content {
         this.duration = duration;
         this.dataOfCriation = date;
         this.url = url;
+    }
+
+    public Set<Bootcamp> getBootcamp() {
+        return bootcamp;
+    }
+
+    public void setBootcamp(Set<Bootcamp> bootcamp) {
+        this.bootcamp = bootcamp;
     }
 
     public String getUrl() {

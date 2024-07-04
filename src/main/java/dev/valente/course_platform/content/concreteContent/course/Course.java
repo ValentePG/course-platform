@@ -1,27 +1,31 @@
 package dev.valente.course_platform.content.concreteContent.course;
 
 import dev.valente.course_platform.content.Content;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import dev.valente.course_platform.content.concreteContent.bootcamp.Bootcamp;
+import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Set;
 
-//@Table(name = "TB_COURSE")
 @Entity
 public class Course extends Content {
 
     private String url;
 
-    public Course(){
+    @ManyToMany
+    private Set<Bootcamp> bootcamp;
 
-    }
-
+    public Course(){}
     public Course(String description, Integer duration, Date date, String url) {
         super();
         this.description = description;
         this.duration = duration;
         this.dataOfCriation = date;
         this.url = url;
+    }
+
+    public Set<Bootcamp> getBootcamp() {
+        return bootcamp;
     }
 
 

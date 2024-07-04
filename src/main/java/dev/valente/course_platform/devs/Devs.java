@@ -1,8 +1,7 @@
 package dev.valente.course_platform.devs;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
-import dev.valente.course_platform.content.concreteContent.course.Course;
-import dev.valente.course_platform.content.concreteContent.mentoring.Mentoring;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,8 +21,8 @@ public class Devs {
     @Column
     private String password;
 
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(mappedBy = "listOfDevs")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(mappedBy = "listOfDevs", fetch = FetchType.LAZY)
     private Set<Content> contents = new HashSet<>();
 
     public Set<Content> getContents() {
