@@ -1,10 +1,12 @@
 package dev.valente.course_platform.content.service;
 
+import dev.valente.course_platform.content.Content;
 import dev.valente.course_platform.content.DTOs.ContentCreationRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentResponseDTO;
 import dev.valente.course_platform.content.concreteContent.course.Course;
 import dev.valente.course_platform.content.concreteContent.mentoring.Mentoring;
+import dev.valente.course_platform.content.factory.ContentFactory;
 import dev.valente.course_platform.content.repository.ContentRepository;
 import dev.valente.course_platform.content.repository.CourseRepository;
 import dev.valente.course_platform.content.repository.MentoringRepository;
@@ -39,29 +41,9 @@ public class ContentService {
     public ContentResponseDTO createContent(ContentCreationRequestDTO content){
 
         //Abstract Factory ou Method Factory encaixa aqui!
-        try {
-            if (content.duration() <= 30) {
-                Course contentToCreate = new Course(content.description(),
-                        content.duration(),
-                        new Date(),
-                        content.url());
-
-                this.contentRepository.save(contentToCreate);
-                return new ContentResponseDTO(contentToCreate);
-
-            } else {
-                Mentoring contentToCreate = new Mentoring(content.description(),
-                        content.duration(),
-                        new Date(),
-                        content.url());
-
-                this.contentRepository.save(contentToCreate);
-                return new ContentResponseDTO(contentToCreate);
-            }
-        } catch (Exception error) {
-            error.getMessage();
-            return null;
-        }
+        Content testeContent = ContentFactory.createContent(content);
+        this.contentRepository.save(testeContent);
+        return new ContentResponseDTO(testeContent);
 
 
     }

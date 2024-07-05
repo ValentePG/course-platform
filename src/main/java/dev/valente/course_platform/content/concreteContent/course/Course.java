@@ -12,7 +12,7 @@ public class Course extends Content {
 
     private String url;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Bootcamp> bootcamp;
 
     public Course(){}
@@ -28,7 +28,7 @@ public class Course extends Content {
         return bootcamp;
     }
 
-
+    @Override
     public String getUrl() {
         return url;
     }

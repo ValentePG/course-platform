@@ -26,7 +26,7 @@ public abstract class Content {
     @Column
     protected Date dataOfCriation;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "TB_CONTENT_DEVS",
                joinColumns = @JoinColumn(name = "content_id"),
                inverseJoinColumns = @JoinColumn(name = "devs_id"))
@@ -60,5 +60,7 @@ public abstract class Content {
         return listOfDevs;
     }
 
-
+    public String getUrl() {
+        return null;
+    }
 }

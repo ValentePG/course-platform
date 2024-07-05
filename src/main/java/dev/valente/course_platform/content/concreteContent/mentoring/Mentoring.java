@@ -14,7 +14,7 @@ public class Mentoring extends Content {
     private String url;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Bootcamp> bootcamp;
 
     public Mentoring(){
@@ -37,6 +37,7 @@ public class Mentoring extends Content {
         this.bootcamp = bootcamp;
     }
 
+    @Override
     public String getUrl() {
         return url;
     }
