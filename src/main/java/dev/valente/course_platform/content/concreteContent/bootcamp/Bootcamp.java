@@ -14,7 +14,7 @@ public class Bootcamp extends Content{
     @ManyToMany
     private Set<Course> listOfCourses;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Mentoring> listOfMentoring;
 
     public Bootcamp(){}
