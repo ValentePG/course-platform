@@ -5,7 +5,6 @@ import dev.valente.course_platform.content.DTOs.ContentCreationRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentResponseDTO;
 import dev.valente.course_platform.content.concreteContent.course.Course;
-import dev.valente.course_platform.content.concreteContent.mentoring.Mentoring;
 import dev.valente.course_platform.content.factory.ContentFactory;
 import dev.valente.course_platform.content.repository.ContentRepository;
 import dev.valente.course_platform.content.repository.CourseRepository;
@@ -14,7 +13,6 @@ import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.repository.DevsRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -63,7 +61,7 @@ public class ContentService {
         Devs testeDev1 = testeDev.get();
 
         teste1.getListOfDevs().add(testeDev1);
-        testeDev1.getContents().add(teste1);
+        testeDev1.getListOfContents().add(teste1);
 
         this.devsRepository.save(testeDev1);
 

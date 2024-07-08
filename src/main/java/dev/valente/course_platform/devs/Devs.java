@@ -23,14 +23,10 @@ public class Devs {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "listOfDevs", fetch = FetchType.LAZY)
-    private Set<Content> contents = new HashSet<>();
+    private Set<Content> listOfContents = new HashSet<>();
 
-    public Set<Content> getContents() {
-        return contents;
-    }
-
-    public void setContents(Set<Content> contents) {
-        this.contents = contents;
+    public Set<Content> getListOfContents() {
+        return listOfContents;
     }
 
     public String getUserName() {

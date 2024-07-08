@@ -6,16 +6,17 @@ import dev.valente.course_platform.content.concreteContent.mentoring.Mentoring;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Bootcamp extends Content{
 
     @ManyToMany
-    private Set<Course> listOfCourses;
+    private Set<Course> listOfCourses = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Mentoring> listOfMentoring;
+    private Set<Mentoring> listOfMentoring = new HashSet<>();
 
     public Bootcamp(){}
     public Bootcamp(String description, Integer duration, Date date) {

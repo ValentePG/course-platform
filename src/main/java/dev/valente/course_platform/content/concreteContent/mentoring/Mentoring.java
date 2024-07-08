@@ -5,6 +5,7 @@ import dev.valente.course_platform.content.concreteContent.bootcamp.Bootcamp;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -15,7 +16,7 @@ public class Mentoring extends Content {
 
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Bootcamp> bootcamp;
+    private Set<Bootcamp> listOfBootcamp = new HashSet<>();
 
     public Mentoring(){
 
@@ -29,12 +30,8 @@ public class Mentoring extends Content {
         this.url = url;
     }
 
-    public Set<Bootcamp> getBootcamp() {
-        return bootcamp;
-    }
-
-    public void setBootcamp(Set<Bootcamp> bootcamp) {
-        this.bootcamp = bootcamp;
+    public Set<Bootcamp> getListOfBootcamp() {
+        return listOfBootcamp;
     }
 
     @Override
