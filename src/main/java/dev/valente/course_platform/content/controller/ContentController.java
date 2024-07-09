@@ -5,12 +5,12 @@ import dev.valente.course_platform.content.DTOs.ContentRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentResponseDTO;
 import dev.valente.course_platform.content.service.ContentService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -27,7 +27,7 @@ public class ContentController {
     @GetMapping
     public ResponseEntity<List<ContentResponseDTO>> listAllCourses(){
 
-        return ResponseEntity.ok(this.contentService.getAllCourses());
+        return ResponseEntity.ok(this.contentService.getAllContents());
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -36,6 +36,15 @@ public class ContentController {
 
         return ResponseEntity.ok(this.contentService.createContent(contentCreationRequestDTO));
     }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("deletecontent/id")
+    public ResponseEntity<ContentResponseDTO> createContent(@RequestParam UUID id){
+
+        return ResponseEntity.ok(this.contentService.deleteContent(id));
+    }
+
+
 
 
     //Talvez seja melhor criar isto em outro local

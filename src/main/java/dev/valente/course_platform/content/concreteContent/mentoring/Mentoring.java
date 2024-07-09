@@ -1,5 +1,6 @@
 package dev.valente.course_platform.content.concreteContent.mentoring;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
 import dev.valente.course_platform.content.concreteContent.bootcamp.Bootcamp;
 import jakarta.persistence.*;
@@ -7,15 +8,17 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 
 @Entity
 public class Mentoring extends Content {
 
+    @Column(unique = true)
     private String url;
 
-
-    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Bootcamp> listOfBootcamp = new HashSet<>();
 
     public Mentoring(){

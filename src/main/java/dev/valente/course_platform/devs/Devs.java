@@ -3,6 +3,8 @@ package dev.valente.course_platform.devs;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
 import jakarta.persistence.*;
+
+import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;

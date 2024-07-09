@@ -1,7 +1,9 @@
 package dev.valente.course_platform.content;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.devs.Devs;
 import jakarta.persistence.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -26,6 +28,7 @@ public abstract class Content {
     @Column
     protected Date dataOfCriation;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "TB_CONTENT_DEVS",
                joinColumns = @JoinColumn(name = "content_id"),

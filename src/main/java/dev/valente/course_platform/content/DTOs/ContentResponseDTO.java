@@ -2,8 +2,6 @@ package dev.valente.course_platform.content.DTOs;
 
 
 import dev.valente.course_platform.content.Content;
-import dev.valente.course_platform.content.concreteContent.course.Course;
-import dev.valente.course_platform.content.concreteContent.mentoring.Mentoring;
 
 import java.util.Date;
 import java.util.List;

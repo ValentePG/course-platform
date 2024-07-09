@@ -1,22 +1,18 @@
 package dev.valente.course_platform.content.concreteContent.bootcamp;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
-import dev.valente.course_platform.content.concreteContent.course.Course;
-import dev.valente.course_platform.content.concreteContent.mentoring.Mentoring;
 import jakarta.persistence.*;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.*;
 
 @Entity
 public class Bootcamp extends Content{
 
-    @ManyToMany
-    private Set<Course> listOfCourses = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Mentoring> listOfMentoring = new HashSet<>();
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Content> listOfContent = new HashSet<>();
 
     public Bootcamp(){}
     public Bootcamp(String description, Integer duration, Date date) {
@@ -26,13 +22,15 @@ public class Bootcamp extends Content{
         this.dataOfCriation = date;
 
     }
-    public Set<Course> getListOfCourses() {
-        return listOfCourses;
+//    public Set<Course> getListOfCourses() {
+//        return listOfCourses;
+//    }
+//
+//    public Set<Mentoring> getListOfMentoring() {
+//        return listOfMentoring;
+//    }
+
+    public Set<Content> getListOfContent() {
+        return listOfContent;
     }
-
-    public Set<Mentoring> getListOfMentoring() {
-        return listOfMentoring;
-    }
-
-
 }
