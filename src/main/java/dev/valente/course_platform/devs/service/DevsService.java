@@ -1,5 +1,6 @@
 package dev.valente.course_platform.devs.service;
 
+import dev.valente.course_platform.content.repository.ContentRepository;
 import dev.valente.course_platform.devs.DTOs.DevsCreationRequestDTO;
 import dev.valente.course_platform.devs.DTOs.DevsRenameDTO;
 import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
@@ -16,9 +17,11 @@ import java.util.UUID;
 public class DevsService {
 
     DevsRepository devsRepository;
+    ContentRepository contentRepository;
 
-    public DevsService(DevsRepository devsRepository) {
+    public DevsService(DevsRepository devsRepository, ContentRepository contentRepository) {
         this.devsRepository = devsRepository;
+        this.contentRepository = contentRepository;
     }
 
     public List<DevsResponseDTO> getAllDevs() {
@@ -62,6 +65,9 @@ public class DevsService {
     public DevsResponseDTO deleteDev(UUID id) {
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(UserNotFound::new);
+        if(!devResearched.getListOfContents().isEmpty()){
+            this.contentRepository.deleteContent(id);
+        }
 
         var devsResponseDTO = new DevsResponseDTO(devResearched);
 

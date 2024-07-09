@@ -23,23 +23,17 @@ public class ContentService {
 
     ContentRepository contentRepository;
     DevsRepository devsRepository;
-    CourseRepository courseRepository;
-    MentoringRepository mentoringRepository;
 
     public ContentService(ContentRepository contentRepository,
-                          DevsRepository devsRepository,
-                          CourseRepository courseRepository,
-                          MentoringRepository mentoringRepository){
+                          DevsRepository devsRepository){
 
         this.contentRepository = contentRepository;
         this.devsRepository = devsRepository;
-        this.courseRepository = courseRepository;
-        this.mentoringRepository = mentoringRepository;
     }
 
     public List<ContentResponseDTO> getAllContents(){
 
-        return this.courseRepository.findAll().stream().map(ContentResponseDTO::new).toList();
+        return this.contentRepository.findAll().stream().map(ContentResponseDTO::new).toList();
     }
 
     public ContentResponseDTO createContent(ContentCreationRequestDTO content){
