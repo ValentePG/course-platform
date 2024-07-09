@@ -1,6 +1,5 @@
 package dev.valente.course_platform.content.DTOs;
 
-
 import dev.valente.course_platform.content.Content;
 
 import java.util.Date;

@@ -4,7 +4,7 @@ import dev.valente.course_platform.devs.Devs;
 
 import java.util.List;
 import java.util.UUID;
-
+                                                        // Poderia ser uma lista só de UUID
 public record DevsResponseDTO(UUID id, String userName, List<ContentIntoDevsDTO> listOfContent) {
 
     public DevsResponseDTO(Devs devs){

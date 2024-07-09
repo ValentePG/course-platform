@@ -3,7 +3,6 @@ package dev.valente.course_platform.content;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.devs.Devs;
 import jakarta.persistence.*;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashSet;

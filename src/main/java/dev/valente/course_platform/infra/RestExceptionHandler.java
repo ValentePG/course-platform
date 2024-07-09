@@ -12,9 +12,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
+    // Explorar mais!!!!
     @ExceptionHandler(UserNameAlreadyExists.class)
-    private ResponseEntity<String> userNameAlreadyExistsHandler(UserNameAlreadyExists exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário já criado!");
+    private ResponseEntity<RestErrorMessage> userNameAlreadyExistsHandler(UserNameAlreadyExists exception){
+        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
     }
 
     @ExceptionHandler(UserNotCreated.class)

@@ -25,7 +25,7 @@ public class ContentController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
-    public ResponseEntity<List<ContentResponseDTO>> listAllCourses(){
+    public ResponseEntity<List<ContentResponseDTO>> listAllContents(){
 
         return ResponseEntity.ok(this.contentService.getAllContents());
     }

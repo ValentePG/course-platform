@@ -18,7 +18,7 @@ public class Mentoring extends Content {
     private String url;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Bootcamp> listOfBootcamp = new HashSet<>();
 
     public Mentoring(){
