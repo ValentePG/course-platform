@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("api/devs")
 public class DevsController {
@@ -21,13 +22,11 @@ public class DevsController {
         this.devsService = devsService;
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public ResponseEntity<List<DevsResponseDTO>> getAllDevs(){
         return ResponseEntity.ok(this.devsService.getAllDevs());
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/{id}")
     public ResponseEntity<DevsResponseDTO> findDevById(@PathVariable(name = "id") UUID id){
 
@@ -35,7 +34,6 @@ public class DevsController {
 
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/{userName}")
     public ResponseEntity<DevsResponseDTO> findDevByUserName(@PathVariable(name = "userName") String userName){
 
@@ -43,7 +41,6 @@ public class DevsController {
 
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<DevsResponseDTO> saveDev(@RequestBody @Valid DevsCreationRequestDTO dev){
 
@@ -51,7 +48,7 @@ public class DevsController {
 
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+
     @DeleteMapping("/{id}")
     public ResponseEntity<DevsResponseDTO> deleteDev(@PathVariable("id") UUID id){
 
@@ -59,7 +56,7 @@ public class DevsController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(this.devsService.deleteDev(id));
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+
     @PutMapping("/{userName}")
     public ResponseEntity<DevsResponseDTO> renameDev(@PathVariable("userName") String devToRename,
                                                      @RequestBody @Valid DevsRenameDTO userName){

@@ -34,6 +34,10 @@ public abstract class Content {
                inverseJoinColumns = @JoinColumn(name = "devs_id"))
     protected Set<Devs> listOfDevs = new HashSet<>();
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(mappedBy = "watchedContent", fetch = FetchType.LAZY)
+    protected Set<Devs> watchingDevs = new HashSet<>();
+
     public UUID getId() {
         return id;
     }

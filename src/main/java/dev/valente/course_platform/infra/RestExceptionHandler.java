@@ -1,5 +1,6 @@
 package dev.valente.course_platform.infra;
 
+import dev.valente.course_platform.content.exceptions.ContentAlreadyExists;
 import dev.valente.course_platform.content.exceptions.ContentNotCreated;
 import dev.valente.course_platform.content.exceptions.ContentNotFound;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
@@ -41,6 +42,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ContentNotFound.class)
     private ResponseEntity<RestErrorMessage> contentNotFound(ContentNotFound exception){
+        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
+    }
+
+    @ExceptionHandler(ContentAlreadyExists.class)
+    private ResponseEntity<RestErrorMessage> contentAlreadyExists(ContentAlreadyExists exception){
         RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
     }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("api/contents")
 public class ContentController {
@@ -21,33 +22,28 @@ public class ContentController {
         this.contentService = contentService;
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+
     @GetMapping
     public ResponseEntity<List<ContentResponseDTO>> listAllContents(){
 
         return ResponseEntity.ok(this.contentService.getAllContents());
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<ContentResponseDTO> createContent(@RequestBody @Valid ContentCreationRequestDTO contentCreationRequestDTO){
 
         return ResponseEntity.ok(this.contentService.createContent(contentCreationRequestDTO));
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/id")
     public ResponseEntity<ContentResponseDTO> createContent(@RequestParam UUID id){
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(this.contentService.deleteContent(id));
     }
 
-
-    //Talvez seja melhor criar isto em outro local
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/{id}/devs")
-    public void registerDevIntoContent(@PathVariable("id") UUID idContent,
+    public ResponseEntity<ContentResponseDTO> registerDevIntoContent(@PathVariable("id") UUID idContent,
                                        @RequestParam UUID idDev){
-        this.contentService.addContentIntoDev(idDev, idContent);
+        return ResponseEntity.ok(this.contentService.addContentIntoDev(idDev, idContent));
     }
 }

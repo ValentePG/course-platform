@@ -2,6 +2,7 @@ package dev.valente.course_platform.content.service;
 
 import dev.valente.course_platform.content.DTOs.ContentCreationRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentResponseDTO;
+import dev.valente.course_platform.content.exceptions.ContentAlreadyExists;
 import dev.valente.course_platform.content.exceptions.ContentNotFound;
 import dev.valente.course_platform.content.factory.ContentFactory;
 import dev.valente.course_platform.content.repository.ContentRepository;
@@ -32,7 +33,8 @@ public class ContentService {
 
     public ContentResponseDTO createContent(ContentCreationRequestDTO content){
 
-                                           // Method Factory
+        var contentIfExists = this.contentRepository.findByURL(content.url()).orElseThrow(ContentAlreadyExists::new);                                 // Method Factory
+
         var testeContent = ContentFactory.createContent(content);
         this.contentRepository.save(testeContent);
         return new ContentResponseDTO(testeContent);
@@ -49,7 +51,7 @@ public class ContentService {
     }
 
 
-    public void addContentIntoDev(UUID idUser, UUID idContent){
+    public ContentResponseDTO addContentIntoDev(UUID idUser, UUID idContent){
         var contentResearched = this.contentRepository.findById(idContent).orElseThrow(ContentNotFound::new);
 
         var devResearched = this.devsRepository.findById(idUser).orElseThrow(DevNotFound::new);
@@ -59,5 +61,7 @@ public class ContentService {
 
         this.devsRepository.save(devResearched);
         this.contentRepository.save(contentResearched);
+
+        return new ContentResponseDTO(contentResearched);
     }
 }

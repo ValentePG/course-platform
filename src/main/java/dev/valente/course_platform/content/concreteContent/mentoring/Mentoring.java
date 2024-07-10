@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 public class Mentoring extends Content {
 
-    @Column(unique = true)
+    @Column
     private String url;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

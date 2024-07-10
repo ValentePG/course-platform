@@ -13,7 +13,7 @@ import java.util.UUID;
 @Entity
 public class Course extends Content {
 
-    @Column(unique = true)
+    @Column
     private String url;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
