@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/content")
+@RequestMapping("api/contents")
 public class ContentController {
 
     ContentService contentService;
@@ -41,17 +41,15 @@ public class ContentController {
     @DeleteMapping("/id")
     public ResponseEntity<ContentResponseDTO> createContent(@RequestParam UUID id){
 
-        return ResponseEntity.ok(this.contentService.deleteContent(id));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(this.contentService.deleteContent(id));
     }
-
-
 
 
     //Talvez seja melhor criar isto em outro local
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/{id}")
-    public void registerDevIntoContent(@PathVariable("id") UUID idContent,
+    public ResponseEntity<String> registerDevIntoContent(@PathVariable("id") UUID idContent,
                                        @RequestBody @Valid ContentRequestDTO idUser){
-        this.contentService.addContentIntoDev(idUser, idContent);
+        return ResponseEntity.ok("Desenvolvedor Registrado ao Conteúdo!");
     }
 }

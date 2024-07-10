@@ -1,5 +1,7 @@
 package dev.valente.course_platform.infra;
 
+import dev.valente.course_platform.content.exceptions.ContentNotCreated;
+import dev.valente.course_platform.content.exceptions.ContentNotFound;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
 import dev.valente.course_platform.devs.exceptions.UserNotCreated;
 import dev.valente.course_platform.devs.exceptions.UserNotFound;
@@ -20,13 +22,27 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(UserNotCreated.class)
-    private ResponseEntity<String> userNotCreatedHandler(UserNotCreated exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O usuário não foi criado por falta de dados!");
+    private ResponseEntity<RestErrorMessage> userNotCreatedHandler(UserNotCreated exception){
+        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
     }
 
     @ExceptionHandler(UserNotFound.class)
-    private ResponseEntity<String> userNotFoundHandler(UserNotFound exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não encontrado!");
+    private ResponseEntity<RestErrorMessage> userNotFoundHandler(UserNotFound exception){
+        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
+    }
+
+    @ExceptionHandler(ContentNotCreated.class)
+    private ResponseEntity<RestErrorMessage> contentNotCreated(ContentNotCreated exception){
+        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
+    }
+
+    @ExceptionHandler(ContentNotFound.class)
+    private ResponseEntity<RestErrorMessage> contentNotFound(ContentNotFound exception){
+        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
     }
 
 }
