@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 
 @Entity
@@ -21,10 +20,7 @@ public class Mentoring extends Content {
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Bootcamp> listOfBootcamp = new HashSet<>();
 
-    public Mentoring(){
-
-    }
-
+    public Mentoring(){}
     public Mentoring(String description, Integer duration, Date date, String url) {
         super();
         this.description = description;

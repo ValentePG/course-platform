@@ -56,7 +56,7 @@ public class DevsController {
     public ResponseEntity<DevsResponseDTO> deleteDev(@PathVariable("id") UUID id){
 
 
-        return ResponseEntity.ok(this.devsService.deleteDev(id));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(this.devsService.deleteDev(id));
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")

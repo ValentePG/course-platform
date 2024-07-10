@@ -53,7 +53,7 @@ public class DevsService {
         this.devsRepository.findDevsByUserName(
                 dev.userName().toUpperCase())
                 .ifPresent(alreadyExist -> {
-                    throw new UserNameAlreadyExists("Usuário " + dev.userName() + " já cadastrado!");
+                    throw new UserNameAlreadyExists();
                 });
 
         var requestDevData = new Devs(dev.userName().toUpperCase(), dev.password());
@@ -86,7 +86,7 @@ public class DevsService {
 
         this.devsRepository.findDevsByUserName(newName.userName().toUpperCase())
                 .ifPresent(alreadyExists -> {
-                    throw new UserNameAlreadyExists("Username: " + newName.userName() + "Já existe!");
+                    throw new UserNameAlreadyExists();
                 });
 
         devResearched.setUserName(newName.userName().toUpperCase());

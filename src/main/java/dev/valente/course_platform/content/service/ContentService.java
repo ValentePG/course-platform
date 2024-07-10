@@ -4,6 +4,7 @@ import dev.valente.course_platform.content.Content;
 import dev.valente.course_platform.content.DTOs.ContentCreationRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentResponseDTO;
+import dev.valente.course_platform.content.exceptions.ContentNotFound;
 import dev.valente.course_platform.content.factory.ContentFactory;
 import dev.valente.course_platform.content.repository.ContentRepository;
 import dev.valente.course_platform.devs.Devs;
@@ -43,7 +44,7 @@ public class ContentService {
 
     public ContentResponseDTO deleteContent(UUID id){
                                                                               // Tratar esta exceção!
-        var contentToDelete = this.contentRepository.findById(id).orElseThrow(RuntimeException::new);
+        var contentToDelete = this.contentRepository.findById(id).orElseThrow(ContentNotFound::new);
         var contentResponseDTO = new ContentResponseDTO(contentToDelete);
         this.contentRepository.delete(contentToDelete);
         return contentResponseDTO;
