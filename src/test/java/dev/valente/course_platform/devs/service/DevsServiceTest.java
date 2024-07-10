@@ -6,7 +6,7 @@ import dev.valente.course_platform.devs.DTOs.DevsRenameDTO;
 import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
 import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
-import dev.valente.course_platform.devs.exceptions.UserNotFound;
+import dev.valente.course_platform.devs.exceptions.DevNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -100,7 +100,7 @@ public class DevsServiceTest {
     }
 
     @Test
-    @DisplayName("Should throw a UserNotFound Exception when trying to delete a non-existing user")
+    @DisplayName("Should throw a DevNotFound Exception when trying to delete a non-existing user")
     void deleteDevFail() {
 
         // Arrange
@@ -108,7 +108,7 @@ public class DevsServiceTest {
         when(devsRepository.findById(id)).thenReturn(Optional.empty());
 
         // Act
-        UserNotFound result = Assertions.assertThrows(UserNotFound.class,
+        DevNotFound result = Assertions.assertThrows(DevNotFound.class,
                 () -> this.devsService.deleteDev(id));
 
         // Asserts
@@ -138,7 +138,7 @@ public class DevsServiceTest {
     }
 
     @Test
-    @DisplayName("Should throw a UserNotFound Exception when trying to rename a non-existing user")
+    @DisplayName("Should throw a DevNotFound Exception when trying to rename a non-existing user")
     void renameDevFail() {
 
         // Arrange
@@ -147,7 +147,7 @@ public class DevsServiceTest {
         when(devsRepository.findDevsByUserName(devToRename.getUserName())).thenReturn(Optional.empty());
 
         // Arrange
-        UserNotFound result = Assertions.assertThrows(UserNotFound.class,
+        DevNotFound result = Assertions.assertThrows(DevNotFound.class,
                 () -> this.devsService.renameDev(devToRename.getUserName(), newName));
 
 
@@ -194,7 +194,7 @@ public class DevsServiceTest {
     }
 
     @Test
-    @DisplayName("Should throw a UserNotFound Exception when trying to find a non-existing user")
+    @DisplayName("Should throw a DevNotFound Exception when trying to find a non-existing user")
     void findDevByIdFail() {
 
         // Arrange
@@ -203,7 +203,7 @@ public class DevsServiceTest {
 
 
         // Act
-        UserNotFound result = Assertions.assertThrows(UserNotFound.class,
+        DevNotFound result = Assertions.assertThrows(DevNotFound.class,
                 () -> this.devsService.findDevById(dev.getId()));
 
         // Asserts
@@ -230,7 +230,7 @@ public class DevsServiceTest {
     }
 
     @Test
-    @DisplayName("Should throw a UserNotFound Exception when trying to find a non-existing user")
+    @DisplayName("Should throw a DevNotFound Exception when trying to find a non-existing user")
     void findDevByUserNameFail() {
 
         // Arrange
@@ -238,7 +238,7 @@ public class DevsServiceTest {
         when(devsRepository.findDevsByUserName(dev.getUserName())).thenReturn(Optional.empty());
 
         // Act
-        UserNotFound result = Assertions.assertThrows(UserNotFound.class,
+        DevNotFound result = Assertions.assertThrows(DevNotFound.class,
                 () -> this.devsService.findDevByUserName(dev.getUserName()));
 
         // Asserts
