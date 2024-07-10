@@ -1,12 +1,12 @@
 package dev.valente.course_platform.devs.exceptions;
 
-public class UserNotFound extends RuntimeException{
+public class DevNotFound extends RuntimeException{
 
-    public UserNotFound() {
+    public DevNotFound() {
         super("Usuário não encontrado!");
     }
 
-    public UserNotFound(String message) {
+    public DevNotFound(String message) {
         super(message);
     }
 

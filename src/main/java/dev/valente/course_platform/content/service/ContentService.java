@@ -1,18 +1,15 @@
 package dev.valente.course_platform.content.service;
 
-import dev.valente.course_platform.content.Content;
 import dev.valente.course_platform.content.DTOs.ContentCreationRequestDTO;
-import dev.valente.course_platform.content.DTOs.ContentRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentResponseDTO;
 import dev.valente.course_platform.content.exceptions.ContentNotFound;
 import dev.valente.course_platform.content.factory.ContentFactory;
 import dev.valente.course_platform.content.repository.ContentRepository;
-import dev.valente.course_platform.devs.Devs;
+import dev.valente.course_platform.devs.exceptions.DevNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -43,7 +40,7 @@ public class ContentService {
     }
 
     public ContentResponseDTO deleteContent(UUID id){
-                                                                              // Tratar esta exceção!
+
         var contentToDelete = this.contentRepository.findById(id).orElseThrow(ContentNotFound::new);
         var contentResponseDTO = new ContentResponseDTO(contentToDelete);
         this.contentRepository.delete(contentToDelete);
@@ -52,19 +49,15 @@ public class ContentService {
     }
 
 
-    public void addContentIntoDev(ContentRequestDTO idUser, UUID idContent){
-        Optional<Content> teste = this.contentRepository.findById(idContent);
+    public void addContentIntoDev(UUID idUser, UUID idContent){
+        var contentResearched = this.contentRepository.findById(idContent).orElseThrow(ContentNotFound::new);
 
-        var teste1 = teste.get();
+        var devResearched = this.devsRepository.findById(idUser).orElseThrow(DevNotFound::new);
 
-        Optional<Devs> testeDev = this.devsRepository.findById(idUser.id());
+        contentResearched.getListOfDevs().add(devResearched);
+        devResearched.getListOfContents().add(contentResearched);
 
-        Devs testeDev1 = testeDev.get();
-
-        teste1.getListOfDevs().add(testeDev1);
-        testeDev1.getListOfContents().add(teste1);
-
-        this.devsRepository.save(testeDev1);
-        this.contentRepository.save(teste1);
+        this.devsRepository.save(devResearched);
+        this.contentRepository.save(contentResearched);
     }
 }

@@ -3,8 +3,8 @@ package dev.valente.course_platform.infra;
 import dev.valente.course_platform.content.exceptions.ContentNotCreated;
 import dev.valente.course_platform.content.exceptions.ContentNotFound;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
-import dev.valente.course_platform.devs.exceptions.UserNotCreated;
-import dev.valente.course_platform.devs.exceptions.UserNotFound;
+import dev.valente.course_platform.devs.exceptions.DevNotCreated;
+import dev.valente.course_platform.devs.exceptions.DevNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,14 +21,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
     }
 
-    @ExceptionHandler(UserNotCreated.class)
-    private ResponseEntity<RestErrorMessage> userNotCreatedHandler(UserNotCreated exception){
+    @ExceptionHandler(DevNotCreated.class)
+    private ResponseEntity<RestErrorMessage> userNotCreatedHandler(DevNotCreated exception){
         RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
     }
 
-    @ExceptionHandler(UserNotFound.class)
-    private ResponseEntity<RestErrorMessage> userNotFoundHandler(UserNotFound exception){
+    @ExceptionHandler(DevNotFound.class)
+    private ResponseEntity<RestErrorMessage> userNotFoundHandler(DevNotFound exception){
         RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
     }

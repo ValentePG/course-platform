@@ -6,7 +6,7 @@ import dev.valente.course_platform.devs.DTOs.DevsRenameDTO;
 import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
 import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
-import dev.valente.course_platform.devs.exceptions.UserNotFound;
+import dev.valente.course_platform.devs.exceptions.DevNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public class DevsService {
     public DevsResponseDTO findDevById(UUID id) {
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(
-                UserNotFound::new);
+                DevNotFound::new);
 
         return new DevsResponseDTO(devResearched);
     }
@@ -43,7 +43,7 @@ public class DevsService {
 
         Devs devResearched = this.devsRepository.findDevsByUserName(
                 userName.toUpperCase()).orElseThrow(
-                UserNotFound::new);
+                DevNotFound::new);
 
         return new DevsResponseDTO(devResearched);
     }
@@ -64,7 +64,7 @@ public class DevsService {
 
     public DevsResponseDTO deleteDev(UUID id) {
 
-        Devs devResearched = this.devsRepository.findById(id).orElseThrow(UserNotFound::new);
+        Devs devResearched = this.devsRepository.findById(id).orElseThrow(DevNotFound::new);
         if(!devResearched.getListOfContents().isEmpty()){
             this.contentRepository.deleteContent(id);
         }
@@ -81,7 +81,7 @@ public class DevsService {
         // Posso diminuir este método
 
         Devs devResearched = this.devsRepository.findDevsByUserName(
-                devToRename.toUpperCase()).orElseThrow(UserNotFound::new);
+                devToRename.toUpperCase()).orElseThrow(DevNotFound::new);
 
 
         this.devsRepository.findDevsByUserName(newName.userName().toUpperCase())

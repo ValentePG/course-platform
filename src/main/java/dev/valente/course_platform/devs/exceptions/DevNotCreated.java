@@ -1,12 +1,12 @@
 package dev.valente.course_platform.devs.exceptions;
 
-public class UserNotCreated extends RuntimeException {
+public class DevNotCreated extends RuntimeException {
 
-    public UserNotCreated() {
+    public DevNotCreated() {
         super("Usuário não criado por falta de dados!");
     }
 
-    public UserNotCreated(String message) {
+    public DevNotCreated(String message) {
         super(message);
     }
 

@@ -1,7 +1,6 @@
 package dev.valente.course_platform.content.controller;
 
 import dev.valente.course_platform.content.DTOs.ContentCreationRequestDTO;
-import dev.valente.course_platform.content.DTOs.ContentRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentResponseDTO;
 import dev.valente.course_platform.content.service.ContentService;
 import jakarta.validation.Valid;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -47,9 +45,9 @@ public class ContentController {
 
     //Talvez seja melhor criar isto em outro local
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PutMapping("/{id}")
-    public ResponseEntity<String> registerDevIntoContent(@PathVariable("id") UUID idContent,
-                                       @RequestBody @Valid ContentRequestDTO idUser){
-        return ResponseEntity.ok("Desenvolvedor Registrado ao Conteúdo!");
+    @PutMapping("/{id}/devs")
+    public void registerDevIntoContent(@PathVariable("id") UUID idContent,
+                                       @RequestParam UUID idDev){
+        this.contentService.addContentIntoDev(idDev, idContent);
     }
 }
