@@ -31,14 +31,14 @@ public class ContentController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PostMapping("registercontent")
+    @PostMapping
     public ResponseEntity<ContentResponseDTO> createContent(@RequestBody @Valid ContentCreationRequestDTO contentCreationRequestDTO){
 
         return ResponseEntity.ok(this.contentService.createContent(contentCreationRequestDTO));
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @DeleteMapping("deletecontent/id")
+    @DeleteMapping("/id")
     public ResponseEntity<ContentResponseDTO> createContent(@RequestParam UUID id){
 
         return ResponseEntity.ok(this.contentService.deleteContent(id));
@@ -49,7 +49,7 @@ public class ContentController {
 
     //Talvez seja melhor criar isto em outro local
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PutMapping("registerdevintocontent/{id}")
+    @PutMapping("/{id}")
     public void registerDevIntoContent(@PathVariable("id") UUID idContent,
                                        @RequestBody @Valid ContentRequestDTO idUser){
         this.contentService.addContentIntoDev(idUser, idContent);
