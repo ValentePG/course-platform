@@ -7,10 +7,17 @@ import org.springframework.http.HttpStatus;
 public class RestErrorMessage {
     private HttpStatus status;
     private String message;
+    private final int statusCode;
+
 
     public RestErrorMessage(HttpStatus status, String message){
         this.message = message;
         this.status = status;
+        this.statusCode = status.value();
+    }
+
+    public int getStatusCode() {
+        return statusCode;
     }
 
     public HttpStatus getStatus() {

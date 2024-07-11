@@ -23,28 +23,32 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(DevNotCreated.class)
-    private ResponseEntity<RestErrorMessage> userNotCreatedHandler(DevNotCreated exception){
-        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
+    private ResponseEntity<RestErrorMessage> devNotCreatedHandler(DevNotCreated exception){
+        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.UNPROCESSABLE_ENTITY,exception.getMessage());
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(threatResponse);
     }
 
+
     @ExceptionHandler(DevNotFound.class)
-    private ResponseEntity<RestErrorMessage> userNotFoundHandler(DevNotFound exception){
-        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
+    private ResponseEntity<RestErrorMessage> devNotFoundHandler(DevNotFound exception){
+        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.NOT_FOUND,exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
     }
+
 
     @ExceptionHandler(ContentNotCreated.class)
     private ResponseEntity<RestErrorMessage> contentNotCreated(ContentNotCreated exception){
-        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
+        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.UNPROCESSABLE_ENTITY,exception.getMessage());
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(threatResponse);
     }
+
 
     @ExceptionHandler(ContentNotFound.class)
     private ResponseEntity<RestErrorMessage> contentNotFound(ContentNotFound exception){
-        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.BAD_REQUEST,exception.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
+        RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.NOT_FOUND,exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
     }
+
 
     @ExceptionHandler(ContentAlreadyExists.class)
     private ResponseEntity<RestErrorMessage> contentAlreadyExists(ContentAlreadyExists exception){
