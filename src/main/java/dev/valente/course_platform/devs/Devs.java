@@ -24,7 +24,7 @@ public class Devs {
     private String password;
 
     @Column
-    private BigDecimal XP;
+    private Double XP = 0.0;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(fetch = FetchType.LAZY)
@@ -37,15 +37,31 @@ public class Devs {
     @ManyToMany(mappedBy = "listOfDevs", fetch = FetchType.LAZY)
     private Set<Content> listOfContents = new HashSet<>();
 
+    public Devs(String userName, String password){
+        this.userName = userName;
+        this.password = password;
+    }
+    public Devs(){
+
+    }
+
     public Set<Content> getListOfContents() {
         return listOfContents;
     }
 
-    public BigDecimal getXP() {
+    public Double getXP() {
         return XP;
     }
 
-    public void setXP(BigDecimal XP) {
+    public Set<Content> getWatchedContent() {
+        return watchedContent;
+    }
+
+    public void setWatchedContent(Set<Content> watchedContent) {
+        this.watchedContent = watchedContent;
+    }
+
+    public void setXP(Double XP) {
         this.XP = XP;
     }
 
@@ -69,11 +85,4 @@ public class Devs {
         return id;
     }
 
-    public Devs(String userName, String password){
-        this.userName = userName;
-        this.password = password;
-    }
-    public Devs(){
-
-    }
 }

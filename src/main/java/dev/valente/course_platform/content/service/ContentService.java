@@ -33,12 +33,15 @@ public class ContentService {
 
     public ContentResponseDTO createContent(ContentCreationRequestDTO content){
 
-        var contentIfExists = this.contentRepository.findByURL(content.url()).orElseThrow(ContentAlreadyExists::new);                                 // Method Factory
+        var contentIfExists = this.contentRepository.findByURL(content.url());
+        if(contentIfExists.isEmpty()){
 
-        var testeContent = ContentFactory.createContent(content);
-        this.contentRepository.save(testeContent);
-        return new ContentResponseDTO(testeContent);
+            var testeContent = ContentFactory.createContent(content);
+            this.contentRepository.save(testeContent);
+            return new ContentResponseDTO(testeContent);
+        }
 
+        throw new ContentAlreadyExists();
     }
 
     public ContentResponseDTO deleteContent(UUID id){
@@ -51,7 +54,7 @@ public class ContentService {
     }
 
 
-    public ContentResponseDTO addContentIntoDev(UUID idUser, UUID idContent){
+    public ContentResponseDTO addContentRegistered(UUID idUser, UUID idContent){
         var contentResearched = this.contentRepository.findById(idContent).orElseThrow(ContentNotFound::new);
 
         var devResearched = this.devsRepository.findById(idUser).orElseThrow(DevNotFound::new);
@@ -59,9 +62,30 @@ public class ContentService {
         contentResearched.getListOfDevs().add(devResearched);
         devResearched.getListOfContents().add(contentResearched);
 
+        contentResearched.getWatchingDevs().add(devResearched);
+        devResearched.getWatchedContent().add(contentResearched);
+        devResearched.setXP(devResearched.getXP() + 50);
+
         this.devsRepository.save(devResearched);
         this.contentRepository.save(contentResearched);
 
         return new ContentResponseDTO(contentResearched);
     }
+
+    public ContentResponseDTO addContentWatched(UUID idContent, UUID idDev){
+        var contentResearched = this.contentRepository.findById(idContent).orElseThrow(ContentNotFound::new);
+
+        var devResearched = this.devsRepository.findById(idDev).orElseThrow(DevNotFound::new);
+
+        contentResearched.getWatchingDevs().add(devResearched);
+        devResearched.getWatchedContent().add(contentResearched);
+        devResearched.setXP(devResearched.getXP() + 50);
+
+        this.devsRepository.save(devResearched);
+        this.contentRepository.save(contentResearched);
+
+        return new ContentResponseDTO(contentResearched);
+    }
+
+
 }

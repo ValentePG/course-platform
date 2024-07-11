@@ -32,6 +32,7 @@ public class ContentController {
     @PostMapping
     public ResponseEntity<ContentResponseDTO> createContent(@RequestBody @Valid ContentCreationRequestDTO contentCreationRequestDTO){
 
+
         return ResponseEntity.ok(this.contentService.createContent(contentCreationRequestDTO));
     }
 
@@ -41,9 +42,15 @@ public class ContentController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(this.contentService.deleteContent(id));
     }
 
-    @PutMapping("/{id}/devs")
-    public ResponseEntity<ContentResponseDTO> registerDevIntoContent(@PathVariable("id") UUID idContent,
-                                       @RequestParam UUID idDev){
-        return ResponseEntity.ok(this.contentService.addContentIntoDev(idDev, idContent));
+    @PutMapping("/{idContent}/devs")
+    public ResponseEntity<ContentResponseDTO> addContentRegistered(@PathVariable("idContent") UUID idContent,
+                                                                   @RequestParam UUID idDev){
+        return ResponseEntity.ok(this.contentService.addContentRegistered(idDev, idContent));
+    }
+
+    @PutMapping("/{idDev}/contents")
+    public ResponseEntity<ContentResponseDTO> addContentWatched(@PathVariable("idDev") UUID idDev,
+                                                                @RequestParam UUID idContent){
+        return ResponseEntity.ok(this.contentService.addContentWatched(idContent, idDev));
     }
 }

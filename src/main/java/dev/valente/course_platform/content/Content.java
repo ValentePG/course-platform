@@ -38,6 +38,14 @@ public abstract class Content {
     @ManyToMany(mappedBy = "watchedContent", fetch = FetchType.LAZY)
     protected Set<Devs> watchingDevs = new HashSet<>();
 
+    public Set<Devs> getWatchingDevs() {
+        return watchingDevs;
+    }
+
+    public void setWatchingDevs(Set<Devs> watchingDevs) {
+        this.watchingDevs = watchingDevs;
+    }
+
     public UUID getId() {
         return id;
     }
