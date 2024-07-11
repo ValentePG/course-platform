@@ -1,12 +1,16 @@
 package dev.valente.course_platform.infra;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.http.HttpStatus;
 
 // Incluir mais detalhes
 
 public class RestErrorMessage {
+
     private HttpStatus status;
+
     private String message;
+
     private final int statusCode;
 
 
