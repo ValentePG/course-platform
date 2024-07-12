@@ -12,7 +12,6 @@ public class ContentFactory {
 
     public static Content createContent(ContentCreationRequestDTO contentRequest){
 
-        //Posso salvar no repositório aqui!
 
         if(contentRequest.duration() <= 30){
             return new Course(contentRequest.description(),

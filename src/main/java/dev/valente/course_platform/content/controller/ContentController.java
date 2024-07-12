@@ -82,7 +82,7 @@ public class ContentController {
                     description = "Retorna o conteúdo que foi assistido"),
             @ApiResponse(responseCode = "404",
                     description = "Se não encontrar algum dos recursos necessários, retorna um NOT FOUND CODE 404",
-            content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
+                    content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
     @PutMapping("/{idDev}/contents")
     public ResponseEntity<ContentResponseDTO> addContentWatched(@PathVariable("idDev") UUID idDev,
                                                                 @RequestParam UUID idContent){
