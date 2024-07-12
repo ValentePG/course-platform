@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -31,11 +30,11 @@ public class Devs {
     @JoinTable(name = "TB_WATCHED_CONTENT",
             joinColumns = @JoinColumn(name = "devs_id"),
             inverseJoinColumns = @JoinColumn(name = "watched_content_id"))
-    private Set<Content> watchedContent = new HashSet<>();
+    private Set<Content> listOfWatchedContents = new HashSet<>();
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(mappedBy = "listOfDevs", fetch = FetchType.LAZY)
-    private Set<Content> listOfContents = new HashSet<>();
+    @ManyToMany(mappedBy = "listOfDevsRegistered", fetch = FetchType.LAZY)
+    private Set<Content> listOfContentsRegistered = new HashSet<>();
 
     public Devs(String userName, String password){
         this.userName = userName;
@@ -45,20 +44,20 @@ public class Devs {
 
     }
 
-    public Set<Content> getListOfContents() {
-        return listOfContents;
+    public Set<Content> getListOfContentsRegistered() {
+        return listOfContentsRegistered;
     }
 
     public Double getXP() {
         return XP;
     }
 
-    public Set<Content> getWatchedContent() {
-        return watchedContent;
+    public Set<Content> getListOfWatchedContents() {
+        return listOfWatchedContents;
     }
 
-    public void setWatchedContent(Set<Content> watchedContent) {
-        this.watchedContent = watchedContent;
+    public void setListOfWatchedContents(Set<Content> listOfWatchedContents) {
+        this.listOfWatchedContents = listOfWatchedContents;
     }
 
     public void setXP(Double XP) {

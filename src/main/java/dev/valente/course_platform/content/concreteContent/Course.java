@@ -1,14 +1,12 @@
-package dev.valente.course_platform.content.concreteContent.course;
+package dev.valente.course_platform.content.concreteContent;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
-import dev.valente.course_platform.content.concreteContent.bootcamp.Bootcamp;
 import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 public class Course extends Content {

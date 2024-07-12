@@ -32,18 +32,18 @@ public abstract class Content {
     @JoinTable(name = "TB_CONTENT_DEVS",
                joinColumns = @JoinColumn(name = "content_id"),
                inverseJoinColumns = @JoinColumn(name = "devs_id"))
-    protected Set<Devs> listOfDevs = new HashSet<>();
+    protected Set<Devs> listOfDevsRegistered = new HashSet<>();
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(mappedBy = "watchedContent", fetch = FetchType.LAZY)
-    protected Set<Devs> watchingDevs = new HashSet<>();
+    @ManyToMany(mappedBy = "listOfWatchedContents", fetch = FetchType.LAZY)
+    protected Set<Devs> listOfDevsWhoWatched = new HashSet<>();
 
-    public Set<Devs> getWatchingDevs() {
-        return watchingDevs;
+    public Set<Devs> getListOfDevsWhoWatched() {
+        return listOfDevsWhoWatched;
     }
 
-    public void setWatchingDevs(Set<Devs> watchingDevs) {
-        this.watchingDevs = watchingDevs;
+    public void setListOfDevsWhoWatched(Set<Devs> listOfDevsWhoWatched) {
+        this.listOfDevsWhoWatched = listOfDevsWhoWatched;
     }
 
     public UUID getId() {
@@ -70,8 +70,8 @@ public abstract class Content {
         return dataOfCriation;
     }
 
-    public Set<Devs> getListOfDevs() {
-        return listOfDevs;
+    public Set<Devs> getListOfDevsRegistered() {
+        return listOfDevsRegistered;
     }
 
     public String getUrl() {

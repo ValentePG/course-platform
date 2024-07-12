@@ -59,11 +59,11 @@ public class ContentService {
 
         var devResearched = this.devsRepository.findById(idUser).orElseThrow(DevNotFound::new);
 
-        contentResearched.getListOfDevs().add(devResearched);
-        devResearched.getListOfContents().add(contentResearched);
+        contentResearched.getListOfDevsRegistered().add(devResearched);
+        devResearched.getListOfContentsRegistered().add(contentResearched);
 
-        contentResearched.getWatchingDevs().add(devResearched);
-        devResearched.getWatchedContent().add(contentResearched);
+        contentResearched.getListOfDevsWhoWatched().add(devResearched);
+        devResearched.getListOfWatchedContents().add(contentResearched);
         devResearched.setXP(devResearched.getXP() + 50);
 
         this.devsRepository.save(devResearched);
@@ -77,8 +77,8 @@ public class ContentService {
 
         var devResearched = this.devsRepository.findById(idDev).orElseThrow(DevNotFound::new);
 
-        contentResearched.getWatchingDevs().add(devResearched);
-        devResearched.getWatchedContent().add(contentResearched);
+        contentResearched.getListOfDevsWhoWatched().add(devResearched);
+        devResearched.getListOfWatchedContents().add(contentResearched);
         devResearched.setXP(devResearched.getXP() + 50);
 
         this.devsRepository.save(devResearched);

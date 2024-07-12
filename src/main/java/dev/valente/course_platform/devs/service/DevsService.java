@@ -65,7 +65,7 @@ public class DevsService {
     public DevsResponseDTO deleteDev(UUID id) {
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(DevNotFound::new);
-        if(!devResearched.getListOfContents().isEmpty()){
+        if(!devResearched.getListOfContentsRegistered().isEmpty()){
             this.contentRepository.deleteContent(id);
         }
 

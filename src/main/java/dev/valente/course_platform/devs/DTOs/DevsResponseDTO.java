@@ -9,7 +9,7 @@ public record DevsResponseDTO(UUID id, String userName, List<ContentIntoDevsDTO>
 
     public DevsResponseDTO(Devs devs){
         this(devs.getId(), devs.getUserName(),
-                devs.getListOfContents().stream().map(t -> new ContentIntoDevsDTO(t.getId())).toList(), devs.getXP());
+                devs.getListOfContentsRegistered().stream().map(t -> new ContentIntoDevsDTO(t.getId())).toList(), devs.getXP());
     }
 
 

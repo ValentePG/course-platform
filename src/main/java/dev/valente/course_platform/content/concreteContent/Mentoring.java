@@ -1,8 +1,7 @@
-package dev.valente.course_platform.content.concreteContent.mentoring;
+package dev.valente.course_platform.content.concreteContent;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
-import dev.valente.course_platform.content.concreteContent.bootcamp.Bootcamp;
 import jakarta.persistence.*;
 
 import java.util.Date;
