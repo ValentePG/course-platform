@@ -14,8 +14,13 @@ public interface ContentRepository extends JpaRepository<Content, UUID> {
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM TB_CONTENT_DEVS WHERE DEVS_ID = :id", nativeQuery = true)
+    @Query(value = "DELETE FROM TB_CONTENT_DEVS WHERE CONTENT_ID = :id", nativeQuery = true)
     void deleteContent(@Param("id") UUID id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM TB_WATCHED_CONTENT WHERE WATCHED_CONTENT_ID = :id", nativeQuery = true)
+    void deleteContentWatched(@Param("id") UUID id);
 
     @Query(value = "SELECT * FROM TB_CONTENT WHERE URL = :url", nativeQuery = true)
     Optional<Content> findByURL(@Param("url") String url);
