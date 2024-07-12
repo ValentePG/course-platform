@@ -12,7 +12,7 @@ public record ContentResponseDTO(UUID id, String description, Integer duration,
 
     public ContentResponseDTO(Content content){
         this(content.getId(), content.getDescription(), content.getDuration(),
-                content.getDataOfCriation(), content.getListOfDevsRegistered()
+                content.getDataOfCreation(), content.getListOfDevsRegistered()
                         .stream().map(t -> new DevsIntoContentDTO(t.getId(),
                                 t.getUserName())).toList(),content.getListOfDevsWhoWatched()
                         .stream().map(t -> new DevsIntoContentDTO(t.getId(),

@@ -25,7 +25,7 @@ public abstract class Content {
     protected Integer duration;
 
     @Column
-    protected Date dataOfCriation;
+    protected Date dataOfCreation;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(fetch = FetchType.LAZY)
@@ -66,8 +66,8 @@ public abstract class Content {
         this.duration = duration;
     }
 
-    public Date getDataOfCriation() {
-        return dataOfCriation;
+    public Date getDataOfCreation() {
+        return dataOfCreation;
     }
 
     public Set<Devs> getListOfDevsRegistered() {

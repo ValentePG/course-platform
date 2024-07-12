@@ -11,18 +11,18 @@ public class Bootcamp extends Content{
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Content> listOfContent = new HashSet<>();
+    private Set<Content> listOfContents = new HashSet<>();
 
     public Bootcamp(){}
     public Bootcamp(String description, Integer duration, Date date) {
         super();
         this.description = description;
         this.duration = duration;
-        this.dataOfCriation = date;
+        this.dataOfCreation = date;
 
     }
 
-    public Set<Content> getListOfContent() {
-        return listOfContent;
+    public Set<Content> getListOfContents() {
+        return listOfContents;
     }
 }

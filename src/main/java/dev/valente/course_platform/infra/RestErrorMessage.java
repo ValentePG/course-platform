@@ -1,6 +1,5 @@
 package dev.valente.course_platform.infra;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.http.HttpStatus;
 
 // Incluir mais detalhes

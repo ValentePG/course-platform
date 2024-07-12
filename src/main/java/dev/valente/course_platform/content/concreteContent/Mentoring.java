@@ -24,7 +24,7 @@ public class Mentoring extends Content {
         super();
         this.description = description;
         this.duration = duration;
-        this.dataOfCriation = date;
+        this.dataOfCreation = date;
         this.url = url;
     }
 
