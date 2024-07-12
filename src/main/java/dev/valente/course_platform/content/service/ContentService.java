@@ -48,6 +48,14 @@ public class ContentService {
 
         var contentToDelete = this.contentRepository.findById(id).orElseThrow(ContentNotFound::new);
         var contentResponseDTO = new ContentResponseDTO(contentToDelete);
+
+        if(!contentToDelete.getListOfDevsRegistered().isEmpty()){
+            this.contentRepository.deleteContent(id);
+        }
+        if(!contentToDelete.getListOfDevsWhoWatched().isEmpty()){
+            this.contentRepository.deleteContentWatched(id);
+        }
+
         this.contentRepository.delete(contentToDelete);
         return contentResponseDTO;
 
@@ -61,10 +69,6 @@ public class ContentService {
 
         contentResearched.getListOfDevsRegistered().add(devResearched);
         devResearched.getListOfContentsRegistered().add(contentResearched);
-
-        contentResearched.getListOfDevsWhoWatched().add(devResearched);
-        devResearched.getListOfWatchedContents().add(contentResearched);
-        devResearched.setXP(devResearched.getXP() + 50);
 
         this.devsRepository.save(devResearched);
         this.contentRepository.save(contentResearched);

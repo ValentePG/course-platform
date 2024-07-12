@@ -17,11 +17,9 @@ import java.util.UUID;
 public class DevsService {
 
     DevsRepository devsRepository;
-    ContentRepository contentRepository;
 
-    public DevsService(DevsRepository devsRepository, ContentRepository contentRepository) {
+    public DevsService(DevsRepository devsRepository) {
         this.devsRepository = devsRepository;
-        this.contentRepository = contentRepository;
     }
 
     public List<DevsResponseDTO> getAllDevs() {
@@ -65,11 +63,14 @@ public class DevsService {
     public DevsResponseDTO deleteDev(UUID id) {
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(DevNotFound::new);
-        if(!devResearched.getListOfContentsRegistered().isEmpty()){
-            this.contentRepository.deleteContent(id);
-        }
-
         var devsResponseDTO = new DevsResponseDTO(devResearched);
+
+        if(!devResearched.getListOfContentsRegistered().isEmpty()){
+            this.devsRepository.deleteContentRegistered(id);
+        }
+        if(!devResearched.getListOfWatchedContents().isEmpty()){
+            this.devsRepository.deleteContentWatched(id);
+        }
 
         this.devsRepository.delete(devResearched);
         return devsResponseDTO;
