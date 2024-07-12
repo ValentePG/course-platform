@@ -7,7 +7,6 @@ import dev.valente.course_platform.devs.service.DevsService;
 import dev.valente.course_platform.infra.RestErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -43,7 +42,7 @@ public class DevsController {
             @ApiResponse(responseCode = "404",
                     description = "Quando não encontrar o desenvolvedor, retorna um NOT FOUND 404",
                     content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")                             //@RequestParam
     public ResponseEntity<DevsResponseDTO> findDevById(@PathVariable(name = "id") UUID id){
 
         return ResponseEntity.ok(this.devsService.findDevById(id));
@@ -57,7 +56,7 @@ public class DevsController {
             @ApiResponse(responseCode = "404",
                     description = "Quando não encontrar o desenvolvedor, retorna um NOT FOUND 404",
                     content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
-    @GetMapping("/{userName}")
+    @GetMapping("/username/{userName}")                       //@RequestParam
     public ResponseEntity<DevsResponseDTO> findDevByUserName(@PathVariable(name = "userName") String userName){
 
         return ResponseEntity.ok(this.devsService.findDevByUserName(userName.toUpperCase()));
@@ -86,7 +85,7 @@ public class DevsController {
             @ApiResponse(responseCode = "404",
                     description = "Quando não encontrar o desenvolvedor, retorna um NOT FOUND 404",
                     content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")                            //@RequestParam
     public ResponseEntity<DevsResponseDTO> deleteDev(@PathVariable("id") UUID id){
 
 
