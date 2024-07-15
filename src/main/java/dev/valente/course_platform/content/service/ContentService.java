@@ -1,7 +1,11 @@
 package dev.valente.course_platform.content.service;
 
+import dev.valente.course_platform.content.Content;
+import dev.valente.course_platform.content.DTOs.BootcampResponseDTO;
 import dev.valente.course_platform.content.DTOs.ContentCreationRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentResponseDTO;
+import dev.valente.course_platform.content.DTOs.CreateBootcampDTO;
+import dev.valente.course_platform.content.concreteContent.Bootcamp;
 import dev.valente.course_platform.content.exceptions.ContentAlreadyExists;
 import dev.valente.course_platform.content.exceptions.ContentNotFound;
 import dev.valente.course_platform.content.factory.ContentFactory;
@@ -10,7 +14,9 @@ import dev.valente.course_platform.devs.exceptions.DevNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -43,6 +49,29 @@ public class ContentService {
 
         throw new ContentAlreadyExists();
     }
+
+    public BootcampResponseDTO createBootcamp(CreateBootcampDTO createBootcampDTO){
+
+        Set<Content> teste = new HashSet<>();
+
+        int duration = 0;
+
+        for (UUID id : createBootcampDTO.contentList()){
+            var content = this.contentRepository.findById(id).orElseThrow(ContentNotFound::new);
+            teste.add(content);
+        }
+
+        for (Content content : teste) {
+            duration += content.getDuration();
+        }
+
+        var bootcamp = new Bootcamp(createBootcampDTO.description(),duration, teste);
+        this.contentRepository.save(bootcamp);
+
+        return new BootcampResponseDTO(bootcamp);
+    }
+
+
 
     public ContentResponseDTO deleteContent(UUID id){
 

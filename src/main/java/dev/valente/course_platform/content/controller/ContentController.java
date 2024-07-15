@@ -1,7 +1,9 @@
 package dev.valente.course_platform.content.controller;
 
+import dev.valente.course_platform.content.DTOs.BootcampResponseDTO;
 import dev.valente.course_platform.content.DTOs.ContentCreationRequestDTO;
 import dev.valente.course_platform.content.DTOs.ContentResponseDTO;
+import dev.valente.course_platform.content.DTOs.CreateBootcampDTO;
 import dev.valente.course_platform.content.service.ContentService;
 import dev.valente.course_platform.infra.RestErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,6 +50,12 @@ public class ContentController {
     public ResponseEntity<ContentResponseDTO> createContent(@RequestBody @Valid ContentCreationRequestDTO contentCreationRequestDTO){
 
         return ResponseEntity.status(HttpStatus.CREATED).body(this.contentService.createContent(contentCreationRequestDTO));
+    }
+
+    @PostMapping("/bootcamps")
+    public ResponseEntity<BootcampResponseDTO> createBootcamp(@RequestBody @Valid CreateBootcampDTO createBootcampDTO){
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.contentService.createBootcamp(createBootcampDTO));
     }
 
     @Operation(summary = "Deletar Conteúdo")

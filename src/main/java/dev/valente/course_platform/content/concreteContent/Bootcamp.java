@@ -2,6 +2,7 @@ package dev.valente.course_platform.content.concreteContent;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
+import dev.valente.course_platform.content.DTOs.CreateBootcampDTO;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -14,12 +15,12 @@ public class Bootcamp extends Content{
     private Set<Content> listOfContents = new HashSet<>();
 
     public Bootcamp(){}
-    public Bootcamp(String description, Integer duration, Date date) {
+    public Bootcamp(String description, Integer duration, Set<Content> listOfContents) {
         super();
         this.description = description;
         this.duration = duration;
-        this.dataOfCreation = date;
-
+        this.dataOfCreation = new Date();
+        this.listOfContents = listOfContents;
     }
 
     public Set<Content> getListOfContents() {
