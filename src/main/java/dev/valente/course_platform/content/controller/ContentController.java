@@ -52,6 +52,7 @@ public class ContentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.contentService.createContent(contentCreationRequestDTO));
     }
 
+    //Configurar Swagger
     @PostMapping("/bootcamps")
     public ResponseEntity<BootcampResponseDTO> createBootcamp(@RequestBody @Valid CreateBootcampDTO createBootcampDTO){
 
@@ -65,8 +66,8 @@ public class ContentController {
             @ApiResponse(responseCode = "404",
                         description = "Quando o conteúdo a ser deletado não é encontrado, retorna um NOT FOUND CODE 404",
                         content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
-    @DeleteMapping("/id")
-    public ResponseEntity<ContentResponseDTO> deleteContent(@RequestParam UUID id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ContentResponseDTO> deleteContent(@PathVariable(name = "id") UUID id){
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(this.contentService.deleteContent(id));
     }
