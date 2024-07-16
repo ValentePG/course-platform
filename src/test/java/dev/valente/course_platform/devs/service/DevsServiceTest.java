@@ -41,6 +41,9 @@ public class DevsServiceTest {
         // Arrange
         var devsCreationRequestDTO = new DevsCreationRequestDTO("GABRIEL","303030");
         var dev = new Devs("GABRIEL", "505050");
+
+        // POSSO CRIAR UMA CONSTANTE DE DEVS AQUI OU LA EM CIMA!
+
         when(devsRepository.findDevsByUserName(devsCreationRequestDTO.userName())).thenReturn(Optional.empty());
         when(devsRepository.save(any(Devs.class))).thenReturn(any(Devs.class));
 
