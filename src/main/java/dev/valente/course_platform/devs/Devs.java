@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 @Table(name = "TB_DEVS")
 @Entity
-public class Devs {
+public class Devs implements Serializable {
 
     @Id
     @GeneratedValue

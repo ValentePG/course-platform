@@ -42,8 +42,8 @@ public class DevsController {
             @ApiResponse(responseCode = "404",
                     description = "Quando não encontrar o desenvolvedor, retorna um NOT FOUND 404",
                     content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
-    @GetMapping("/{id}")                             //@RequestParam
-    public ResponseEntity<DevsResponseDTO> findDevById(@PathVariable(name = "id") UUID id){
+    @GetMapping("id")
+    public ResponseEntity<DevsResponseDTO> findDevById(@RequestParam(name = "id") UUID id){
 
         return ResponseEntity.ok(this.devsService.findDevById(id));
 
@@ -56,8 +56,8 @@ public class DevsController {
             @ApiResponse(responseCode = "404",
                     description = "Quando não encontrar o desenvolvedor, retorna um NOT FOUND 404",
                     content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
-    @GetMapping("/{userName}")                       //@RequestParam
-    public ResponseEntity<DevsResponseDTO> findDevByUserName(@PathVariable(name = "userName") String userName){
+    @GetMapping("username")
+    public ResponseEntity<DevsResponseDTO> findDevByUserName(@RequestParam(name = "userName") String userName){
 
         return ResponseEntity.ok(this.devsService.findDevByUserName(userName.toUpperCase()));
 
@@ -85,7 +85,7 @@ public class DevsController {
             @ApiResponse(responseCode = "404",
                     description = "Quando não encontrar o desenvolvedor, retorna um NOT FOUND 404",
                     content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
-    @DeleteMapping("/{id}")                            //@RequestParam
+    @DeleteMapping("/{id}")
     public ResponseEntity<DevsResponseDTO> deleteDev(@PathVariable("id") UUID id){
 
 

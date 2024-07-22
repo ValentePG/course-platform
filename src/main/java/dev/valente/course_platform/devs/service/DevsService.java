@@ -1,6 +1,5 @@
 package dev.valente.course_platform.devs.service;
 
-import dev.valente.course_platform.content.repository.ContentRepository;
 import dev.valente.course_platform.devs.DTOs.DevsCreationRequestDTO;
 import dev.valente.course_platform.devs.DTOs.DevsRenameDTO;
 import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
@@ -8,6 +7,10 @@ import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
 import dev.valente.course_platform.devs.exceptions.DevNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +31,7 @@ public class DevsService {
                 DevsResponseDTO::new).toList();
     }
 
-
+    @Cacheable(value = "devs")
     public DevsResponseDTO findDevById(UUID id) {
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(
@@ -37,6 +40,7 @@ public class DevsService {
         return new DevsResponseDTO(devResearched);
     }
 
+    @Cacheable(value = "devs")
     public DevsResponseDTO findDevByUserName(String userName) {
 
         Devs devResearched = this.devsRepository.findDevsByUserName(
@@ -60,6 +64,7 @@ public class DevsService {
 
     }
 
+    @CacheEvict(value = "devs")
     public DevsResponseDTO deleteDev(UUID id) {
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(DevNotFound::new);
@@ -77,6 +82,7 @@ public class DevsService {
 
     }
 
+    @CachePut(value = "devs")
     public DevsResponseDTO renameDev(String devToRename, DevsRenameDTO newName){
 
         // Posso diminuir este método
@@ -93,6 +99,7 @@ public class DevsService {
         devResearched.setUserName(newName.userName().toUpperCase());
         this.devsRepository.save(devResearched);
 
+        // Cache.cacheConfig(id); Criar pasta para configurar o Cache Customizado e retirar o CachePut daqui!
         return new DevsResponseDTO(devResearched);
     }
 
