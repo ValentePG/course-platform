@@ -100,12 +100,12 @@ public class DevsController {
             @ApiResponse(responseCode = "404",
                     description = "Quando não encontrar o desenvolvedor, retorna um NOT FOUND 404",
                     content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
-    @PutMapping("/{userName}")
-    public ResponseEntity<DevsResponseDTO> renameDev(@PathVariable("userName") String devToRename,
+    @PutMapping("/{id}")
+    public ResponseEntity<DevsResponseDTO> renameDev(@PathVariable("id") UUID id,
                                                      @RequestBody @Valid DevsRenameDTO userName){
 
 
-        return ResponseEntity.ok(this.devsService.renameDev(devToRename, userName));
+        return ResponseEntity.ok(this.devsService.renameDev(id, userName));
     }
 
 

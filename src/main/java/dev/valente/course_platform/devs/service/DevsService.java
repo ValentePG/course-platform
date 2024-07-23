@@ -7,7 +7,6 @@ import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
 import dev.valente.course_platform.devs.exceptions.DevNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -31,7 +30,7 @@ public class DevsService {
                 DevsResponseDTO::new).toList();
     }
 
-    @Cacheable(value = "devs")
+    @Cacheable(value = "devs", key = "#id")
     public DevsResponseDTO findDevById(UUID id) {
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(
@@ -40,7 +39,7 @@ public class DevsService {
         return new DevsResponseDTO(devResearched);
     }
 
-    @Cacheable(value = "devs")
+    @Cacheable(value = "devs", key = "#userName")
     public DevsResponseDTO findDevByUserName(String userName) {
 
         Devs devResearched = this.devsRepository.findDevsByUserName(
@@ -64,7 +63,7 @@ public class DevsService {
 
     }
 
-    @CacheEvict(value = "devs")
+    @CacheEvict(value = "devs", key = "#id")
     public DevsResponseDTO deleteDev(UUID id) {
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(DevNotFound::new);
@@ -82,13 +81,12 @@ public class DevsService {
 
     }
 
-    @CachePut(value = "devs")
-    public DevsResponseDTO renameDev(String devToRename, DevsRenameDTO newName){
+    @CachePut(value = "devs", key = "#id")
+    public DevsResponseDTO renameDev(UUID id, DevsRenameDTO newName){
 
         // Posso diminuir este método
 
-        Devs devResearched = this.devsRepository.findDevsByUserName(
-                devToRename.toUpperCase()).orElseThrow(DevNotFound::new);
+        Devs devResearched = this.devsRepository.findById(id).orElseThrow(DevNotFound::new);
 
 
         this.devsRepository.findDevsByUserName(newName.userName().toUpperCase())
