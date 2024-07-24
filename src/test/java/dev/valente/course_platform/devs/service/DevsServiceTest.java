@@ -129,7 +129,7 @@ public class DevsServiceTest {
 
 
         // Act
-        var result = this.devsService.renameDev(devToRename.getUserName(), newName);
+        var result = this.devsService.renameDev(devToRename.getId(), newName);
 
 
         // Asserts
@@ -150,7 +150,7 @@ public class DevsServiceTest {
 
         // Arrange
         DevNotFound result = Assertions.assertThrows(DevNotFound.class,
-                () -> this.devsService.renameDev(devToRename.getUserName(), newName));
+                () -> this.devsService.renameDev(devToRename.getId(), newName));
 
 
         // Arrange
@@ -170,7 +170,7 @@ public class DevsServiceTest {
 
         // Act
         UserNameAlreadyExists result = Assertions.assertThrows(UserNameAlreadyExists.class,
-                () -> this.devsService.renameDev(devToRename.getUserName(), newName));
+                () -> this.devsService.renameDev(devToRename.getId(), newName));
 
         // Asserts
         Assertions.assertEquals("Nome de usuário já existe!", result.getMessage());
