@@ -7,7 +7,7 @@ import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
 import dev.valente.course_platform.devs.exceptions.DevNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
-import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,15 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@CacheConfig(cacheNames = "devs")
 public class DevsService {
 
     DevsRepository devsRepository;
+    CacheService cacheService;
 
-    public DevsService(DevsRepository devsRepository) {
+    public DevsService(DevsRepository devsRepository, CacheService cacheService) {
         this.devsRepository = devsRepository;
+        this.cacheService = cacheService;
     }
 
     public List<DevsResponseDTO> getAllDevs() {
@@ -30,7 +33,7 @@ public class DevsService {
                 DevsResponseDTO::new).toList();
     }
 
-    @Cacheable(value = "devs", key = "#id")
+    @Cacheable(key = "#id")
     public DevsResponseDTO findDevById(UUID id) {
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(
@@ -39,7 +42,7 @@ public class DevsService {
         return new DevsResponseDTO(devResearched);
     }
 
-    @Cacheable(value = "devs", key = "#userName")
+    @Cacheable(key = "#userName")
     public DevsResponseDTO findDevByUserName(String userName) {
 
         Devs devResearched = this.devsRepository.findDevsByUserName(
@@ -63,11 +66,13 @@ public class DevsService {
 
     }
 
-    @CacheEvict(value = "devs", key = "#id")
     public DevsResponseDTO deleteDev(UUID id) {
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(DevNotFound::new);
         var devsResponseDTO = new DevsResponseDTO(devResearched);
+
+
+        cacheService.evictCache(devResearched.getClass().getSimpleName().toLowerCase(), devResearched.getId());
 
         if(!devResearched.getListOfContentsRegistered().isEmpty()){
             this.devsRepository.deleteContentRegistered(id);
@@ -81,10 +86,9 @@ public class DevsService {
 
     }
 
-    @CachePut(value = "devs", key = "#id")
+
     public DevsResponseDTO renameDev(UUID id, DevsRenameDTO newName){
 
-        // Posso diminuir este método
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(DevNotFound::new);
 
@@ -97,8 +101,12 @@ public class DevsService {
         devResearched.setUserName(newName.userName().toUpperCase());
         this.devsRepository.save(devResearched);
 
-        // Cache.cacheConfig(id); Criar pasta para configurar o Cache Customizado e retirar o CachePut daqui!
-        return new DevsResponseDTO(devResearched);
+        var devsResponseDTO = new DevsResponseDTO(devResearched);
+
+        cacheService.putCache(devResearched.getClass().getSimpleName().toLowerCase(),
+                devResearched.getId(), devsResponseDTO);
+
+        return devsResponseDTO;
     }
 
 }
