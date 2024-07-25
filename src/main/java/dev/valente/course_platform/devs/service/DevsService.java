@@ -8,7 +8,6 @@ import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
 import dev.valente.course_platform.devs.exceptions.DevNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +18,8 @@ import java.util.UUID;
 @CacheConfig(cacheNames = "devs")
 public class DevsService {
 
-    DevsRepository devsRepository;
-    CacheService cacheService;
+    private final DevsRepository devsRepository;
+    private final CacheService cacheService;
 
     public DevsService(DevsRepository devsRepository, CacheService cacheService) {
         this.devsRepository = devsRepository;
@@ -38,7 +37,6 @@ public class DevsService {
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(
                 DevNotFound::new);
-
         return new DevsResponseDTO(devResearched);
     }
 
@@ -71,7 +69,7 @@ public class DevsService {
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(DevNotFound::new);
         var devsResponseDTO = new DevsResponseDTO(devResearched);
 
-
+        // Cache
         cacheService.evictCache(devResearched.getClass().getSimpleName().toLowerCase(), devResearched.getId());
 
         if(!devResearched.getListOfContentsRegistered().isEmpty()){
@@ -85,7 +83,6 @@ public class DevsService {
         return devsResponseDTO;
 
     }
-
 
     public DevsResponseDTO renameDev(UUID id, DevsRenameDTO newName){
 
@@ -103,6 +100,8 @@ public class DevsService {
 
         var devsResponseDTO = new DevsResponseDTO(devResearched);
 
+
+        // Cache
         cacheService.putCache(devResearched.getClass().getSimpleName().toLowerCase(),
                 devResearched.getId(), devsResponseDTO);
 

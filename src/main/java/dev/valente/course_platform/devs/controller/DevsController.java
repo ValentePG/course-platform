@@ -72,7 +72,6 @@ public class DevsController {
                     content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
     @PostMapping
     public ResponseEntity<DevsResponseDTO> saveDev(@RequestBody @Valid DevsCreationRequestDTO dev){
-
         return ResponseEntity.status(HttpStatus.CREATED).body(this.devsService.saveDev(dev));
 
     }

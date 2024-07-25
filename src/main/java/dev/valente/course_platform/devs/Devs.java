@@ -44,6 +44,11 @@ public class Devs implements Serializable {
     public Devs(){
 
     }
+    public Devs(UUID id, String userName, String password) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+    }
 
     public Set<Content> getListOfContentsRegistered() {
         return listOfContentsRegistered;
