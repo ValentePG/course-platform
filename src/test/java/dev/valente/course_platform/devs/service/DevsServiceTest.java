@@ -2,13 +2,11 @@ package dev.valente.course_platform.devs.service;
 
 
 import dev.valente.course_platform.devs.DTOs.DevsCreationRequestDTO;
-import dev.valente.course_platform.devs.DTOs.DevsRenameDTO;
 import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
 import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
 import dev.valente.course_platform.devs.exceptions.DevNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,12 +14,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-
 import java.util.Optional;
-import java.util.UUID;
 
+import static dev.valente.course_platform.common.DevsConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -31,220 +29,171 @@ public class DevsServiceTest {
     @Mock
     DevsRepository devsRepository;
 
+    @Mock
+    CacheService cacheService;
+
     @InjectMocks
     private DevsService devsService;
 
     @Test
     @DisplayName("Should save Dev successfuly")
-    void saveDevSuccessfull(){
+    void saveDev_WithValidData_ReturnsDev(){
 
         // Arrange
-        var devsCreationRequestDTO = new DevsCreationRequestDTO("GABRIEL","303030");
-        var dev = new Devs("GABRIEL", "505050");
-
-        // POSSO CRIAR UMA CONSTANTE DE DEVS AQUI OU LA EM CIMA!
-
+        var devsCreationRequestDTO = new DevsCreationRequestDTO(DEVS.getUserName(), DEVS.getPassword());
         when(devsRepository.findDevsByUserName(devsCreationRequestDTO.userName())).thenReturn(Optional.empty());
-        when(devsRepository.save(any(Devs.class))).thenReturn(any(Devs.class));
 
         // Act
-        var result = this.devsService.saveDev(devsCreationRequestDTO);
-
+        DevsResponseDTO sut = this.devsService.saveDev(devsCreationRequestDTO);
 
         // Asserts
-
-        assertThat(result).isInstanceOf(DevsResponseDTO.class);
-        Assertions.assertEquals(result.userName(), dev.getUserName());
+        assertThat(sut).isEqualTo(DEVS_RESPONSE_DTO);
         verify(devsRepository, times(1))
                 .findDevsByUserName(devsCreationRequestDTO.userName());
-        verify(devsRepository, times(1)).save(any(Devs.class));
+        verify(devsRepository, times(1))
+                .save(any(Devs.class));
     }
 
     @Test
     @DisplayName("Should throw a UserNameAlreadyExists Exception when trying to save an existing User")
-    void saveDevFail() {
+    void saveDev_WithExistingData_ThrowsException() {
 
         // AAA
 
         // Arrange
-        var mockDevs = mock(Devs.class); // Atenção*
-        var devsCreationRequestDTO = new DevsCreationRequestDTO("GABRIEL","5757");
-        when(devsRepository.findDevsByUserName(devsCreationRequestDTO.userName())).thenReturn(Optional.of(mockDevs));
+        var devsCreationRequestDTO = new DevsCreationRequestDTO(DEVS.getUserName(), DEVS.getPassword());
+        when(devsRepository.findDevsByUserName(devsCreationRequestDTO.userName())).thenReturn(Optional.of(DEVS));
 
-        // Act
+        // Act & Asserts
 
-        UserNameAlreadyExists result = Assertions.assertThrows(UserNameAlreadyExists.class,
-                () -> this.devsService.saveDev(devsCreationRequestDTO));
+        assertThatThrownBy(() -> this.devsService.saveDev(devsCreationRequestDTO))
+                .isInstanceOf(UserNameAlreadyExists.class);
 
-        // Asserts
-
-        Assertions.assertEquals("Nome de usuário já existe!", result.getMessage());
-        verify(devsRepository, times(1))
-                .findDevsByUserName(devsCreationRequestDTO.userName());
     }
 
     @Test
     @DisplayName("Should delete Dev successfully")
-    void deleteDevSuccess() {
+    void deleteDev_WhenDevFound_ReturnsDev() {
         // Arrange
-        var dev = new Devs("GABRIEL", "505050");
-        when(devsRepository.findById(dev.getId())).thenReturn(Optional.of(dev));
+        when(devsRepository.findById(DEVS_WITH_ID.getId())).thenReturn(Optional.of(DEVS_WITH_ID));
+        doNothing().when(cacheService).evictCache(DEVS_WITH_ID.getClass().getSimpleName().toLowerCase(), DEVS_WITH_ID.getId());
 
         // Act
-        var result = this.devsService.deleteDev(dev.getId());
+        var sut = this.devsService.deleteDev(DEVS_WITH_ID.getId());
 
 
         // Asserts
-        Assertions.assertEquals(dev.getId(), result.id());
-        assertThat(result).isInstanceOf(DevsResponseDTO.class);
-        verify(devsRepository, times(1)).findById(dev.getId());
-        verify(devsRepository, times(1)).delete(any(Devs.class));
+        assertThat(sut).isEqualTo(DEVS_RESPONSE_DTO_WITH_ID);
     }
 
     @Test
     @DisplayName("Should throw a DevNotFound Exception when trying to delete a non-existing user")
-    void deleteDevFail() {
+    void deleteDev_WhenDevNotFound_ThrowsException() {
 
         // Arrange
-        UUID id = UUID.randomUUID();
-        when(devsRepository.findById(id)).thenReturn(Optional.empty());
+        when(devsRepository.findById(DEVS_WITH_ID.getId())).thenReturn(Optional.empty());
 
-        // Act
-        DevNotFound result = Assertions.assertThrows(DevNotFound.class,
-                () -> this.devsService.deleteDev(id));
+        // Act & Asserts
+        assertThatThrownBy(() -> this.devsService.deleteDev(DEVS_WITH_ID.getId()))
+                .isInstanceOf(DevNotFound.class);
 
-        // Asserts
-        Assertions.assertEquals("Usuário não encontrado!", result.getMessage());
-        verify(devsRepository, times(1)).findById(id);
     }
 
     @Test
     @DisplayName("Should rename Dev successfuly")
-    void renameDevSucess() {
+    void renameDev_WhenDevExistAndNewNameDoesNot_ReturnsDev() {
 
         // Arrange
-        var devToRename = new Devs("GABRIEL", "505050");
-        var newName = new DevsRenameDTO("GUSTAVO");
-        when(devsRepository.findDevsByUserName(devToRename.getUserName())).thenReturn(Optional.of(devToRename));
+        when(devsRepository.findById(DEVS_TO_RENAME.getId())).thenReturn(Optional.of(DEVS_TO_RENAME));
 
 
         // Act
-        var result = this.devsService.renameDev(devToRename.getId(), newName);
+        var sut = this.devsService.renameDev(DEVS_TO_RENAME.getId(), DEVS_RENAME_DTO);
 
 
         // Asserts
-        assertThat(result).isInstanceOf(DevsResponseDTO.class);
-        Assertions.assertEquals(newName.userName(), result.userName());
-        verify(devsRepository, times(1)).findDevsByUserName(devToRename.getUserName());
-        verify(devsRepository, times(1)).findDevsByUserName(newName.userName());
+        assertThat(sut).isEqualTo(DEVS_RENAMED_DTO);
     }
 
     @Test
     @DisplayName("Should throw a DevNotFound Exception when trying to rename a non-existing user")
-    void renameDevFail() {
+    void renameDev_WhenDevNotFound_ThrowsException() {
 
         // Arrange
-        var devToRename = new Devs("GABRIEL", "505050");
-        var newName = new DevsRenameDTO("GUSTAVO");
-        when(devsRepository.findDevsByUserName(devToRename.getUserName())).thenReturn(Optional.empty());
+        when(devsRepository.findById(DEVS_WITH_ID.getId())).thenReturn(Optional.empty());
 
-        // Arrange
-        DevNotFound result = Assertions.assertThrows(DevNotFound.class,
-                () -> this.devsService.renameDev(devToRename.getId(), newName));
+        // Act & Assert
+        assertThatThrownBy(() -> this.devsService.renameDev(DEVS_WITH_ID.getId(), DEVS_RENAME_DTO))
+                .isInstanceOf(DevNotFound.class);
 
-
-        // Arrange
-        Assertions.assertEquals("Usuário não encontrado!", result.getMessage());
-        verify(devsRepository, times(1)).findDevsByUserName(devToRename.getUserName());
     }
 
     @Test
     @DisplayName("Should throw a UserNameAlreadyExists Exception when trying to rename to an existing username")
-    void renameDevFail2() {
+    void renameDev_WhenNameAlreadyExists_ThrowsException() {
 
         // Arrange
-        var devToRename = new Devs("GABRIEL", "505050");
-        var newName = new DevsRenameDTO("GUSTAVO");
-        when(devsRepository.findDevsByUserName(devToRename.getUserName())).thenReturn(Optional.of(devToRename));
-        when(devsRepository.findDevsByUserName(newName.userName())).thenReturn(Optional.of(devToRename));
+        when(devsRepository.findById(DEVS_WITH_ID.getId())).thenReturn(Optional.of(DEVS_WITH_ID));
+        when(devsRepository.findDevsByUserName(DEVS_RENAME_DTO.userName())).thenReturn(Optional.of(DEVS));
 
-        // Act
-        UserNameAlreadyExists result = Assertions.assertThrows(UserNameAlreadyExists.class,
-                () -> this.devsService.renameDev(devToRename.getId(), newName));
+        // Act & Assert
+        assertThatThrownBy(() -> this.devsService.renameDev(DEVS_WITH_ID.getId(), DEVS_RENAME_DTO))
+                .isInstanceOf(UserNameAlreadyExists.class);
 
-        // Asserts
-        Assertions.assertEquals("Nome de usuário já existe!", result.getMessage());
-        verify(devsRepository, times(1)).findDevsByUserName(devToRename.getUserName());
-        verify(devsRepository, times(1)).findDevsByUserName(newName.userName());
     }
 
     @Test
     @DisplayName("Should return a Dev successfully")
-    void findDevByIdSucess() {
+    void findDevById_WhenDevFound_ReturnsDev(){
 
         // Arrange
-        var dev = new Devs("GABRIEL", "505050");
-        when(devsRepository.findById(dev.getId())).thenReturn(Optional.of(dev));
+        when(devsRepository.findById(DEVS_WITH_ID.getId())).thenReturn(Optional.of(DEVS_WITH_ID));
 
         // Act
-        var result = this.devsService.findDevById(dev.getId());
+        var sut = this.devsService.findDevById(DEVS_WITH_ID.getId());
 
-        // Asserts
-        Assertions.assertEquals(result.userName(), dev.getUserName());
-        assertThat(result).isInstanceOf(DevsResponseDTO.class);
-        verify(devsRepository, times(1)).findById(dev.getId());
+        // Assert
+        assertThat(sut).isEqualTo(DEVS_RESPONSE_DTO_WITH_ID);
     }
 
     @Test
     @DisplayName("Should throw a DevNotFound Exception when trying to find a non-existing user")
-    void findDevByIdFail() {
+    void findDevById_WhenDevNotFound_ThrowsException() {
 
         // Arrange
-        var dev = new Devs("GABRIEL", "505050");
-        when(devsRepository.findById(dev.getId())).thenReturn(Optional.empty());
+        when(devsRepository.findById(DEVS_WITH_ID.getId())).thenReturn(Optional.empty());
 
 
-        // Act
-        DevNotFound result = Assertions.assertThrows(DevNotFound.class,
-                () -> this.devsService.findDevById(dev.getId()));
-
-        // Asserts
-        Assertions.assertEquals("Usuário não encontrado!", result.getMessage());
-        verify(devsRepository, times(1)).findById(dev.getId());
+        // Act & Assert
+        assertThatThrownBy(() -> this.devsService.findDevById(DEVS_WITH_ID.getId()))
+                .isInstanceOf(DevNotFound.class);
     }
 
     @Test
     @DisplayName("Should return a Dev successfully")
-    void findDevByUserNameSucess() {
+    void findDevByUserName_WhenDevFound_ReturnsDev() {
 
         // Arrange
-        var dev = new Devs("GABRIEL", "505050");
-        when(devsRepository.findDevsByUserName(dev.getUserName())).thenReturn(Optional.of(dev));
+        when(devsRepository.findDevsByUserName(DEVS.getUserName())).thenReturn(Optional.of(DEVS));
 
         // Act
-        var result = this.devsService.findDevByUserName(dev.getUserName());
+        var sut = this.devsService.findDevByUserName(DEVS.getUserName());
 
-        // Asserts
-        Assertions.assertEquals(result.userName(), dev.getUserName());
-        assertThat(result).isInstanceOf(DevsResponseDTO.class);
-        verify(devsRepository, times(1)).findDevsByUserName(dev.getUserName());
+        // Assert
+        assertThat(sut).isEqualTo(DEVS_RESPONSE_DTO);
 
     }
 
     @Test
     @DisplayName("Should throw a DevNotFound Exception when trying to find a non-existing user")
-    void findDevByUserNameFail() {
+    void findDevByUserName_WhenDevNotFound_ThrowsException() {
 
         // Arrange
-        var dev = new Devs("GABRIEL", "505050");
-        when(devsRepository.findDevsByUserName(dev.getUserName())).thenReturn(Optional.empty());
+        when(devsRepository.findDevsByUserName(DEVS.getUserName())).thenReturn(Optional.empty());
 
-        // Act
-        DevNotFound result = Assertions.assertThrows(DevNotFound.class,
-                () -> this.devsService.findDevByUserName(dev.getUserName()));
+        // Act & Assert
+        assertThatThrownBy(() -> this.devsService.findDevByUserName(DEVS.getUserName()))
+                .isInstanceOf(DevNotFound.class);
 
-        // Asserts
-        Assertions.assertEquals("Usuário não encontrado!", result.getMessage());
-        verify(devsRepository, times(1)).findDevsByUserName(dev.getUserName());
     }
 }

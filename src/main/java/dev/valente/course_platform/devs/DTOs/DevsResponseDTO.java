@@ -16,5 +16,4 @@ public record DevsResponseDTO(UUID id, String userName, List<ContentIntoDevsDTO>
                 devs.getXP());
     }
 
-
 }
