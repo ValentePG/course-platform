@@ -28,11 +28,7 @@ public class CacheService {
     @Scheduled(fixedRateString = "${caching.spring.devsTTL}")
     public void evictAllCaches(){
         for (String cacheName : cacheManager.getCacheNames()) {
-            try{
-                cacheManager.getCache(cacheName).clear();
-            } catch (NullPointerException error){
-                error.getMessage();
-            }
+            cacheManager.getCache(cacheName).clear();
         }
 
     }

@@ -103,7 +103,6 @@ public class DevsController {
     public ResponseEntity<DevsResponseDTO> renameDev(@PathVariable("id") UUID id,
                                                      @RequestBody @Valid DevsRenameDTO userName){
 
-
         return ResponseEntity.ok(this.devsService.renameDev(id, userName));
     }
 
