@@ -3,6 +3,10 @@ package dev.valente.course_platform.devs;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -17,10 +21,12 @@ public class Devs implements Serializable {
     @GeneratedValue
     private UUID id;
 
-    @Column
+    @NotEmpty
+    @Column(unique = true, nullable = false)
     private String userName;
 
-    @Column
+    @NotEmpty
+    @Column(unique = true, nullable = false)
     private String password;
 
     @Column
@@ -37,12 +43,12 @@ public class Devs implements Serializable {
     @ManyToMany(mappedBy = "listOfDevsRegistered", fetch = FetchType.LAZY)
     private Set<Content> listOfContentsRegistered = new HashSet<>();
 
-    public Devs(String userName, String password){
-        this.userName = userName;
-        this.password = password;
-    }
     public Devs(){
 
+    }
+    public Devs(String userName,String password){
+        this.userName = userName;
+        this.password = password;
     }
     public Devs(UUID id, String userName, String password) {
         this.id = id;
@@ -86,8 +92,21 @@ public class Devs implements Serializable {
         this.password = password;
     }
 
+
     public UUID getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Devs{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", XP=" + XP +
+                ", listOfWatchedContents=" + listOfWatchedContents +
+                ", listOfContentsRegistered=" + listOfContentsRegistered +
+                '}';
     }
 
 }

@@ -23,4 +23,5 @@ public interface DevsRepository extends JpaRepository<Devs, UUID> {
     @Transactional
     @Query(value = "DELETE FROM TB_WATCHED_CONTENT WHERE DEVS_ID = :id", nativeQuery = true)
     void deleteContentWatched(@Param("id") UUID id);
+
 }
