@@ -52,7 +52,13 @@ public class ContentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.contentService.createContent(contentCreationRequestDTO));
     }
 
-    //Configurar Swagger
+    @Operation(summary = "Criar conteúdo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Retorna o conteúdo criado"),
+            @ApiResponse(responseCode = "400",
+                    description = "Quando o conteúdo ja existe, retorna uma BAD REQUEST CODE 400",
+                    content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
     @PostMapping("/bootcamps")
     public ResponseEntity<BootcampResponseDTO> createBootcamp(@RequestBody @Valid CreateBootcampDTO createBootcampDTO){
 

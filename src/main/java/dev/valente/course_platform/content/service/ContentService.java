@@ -52,20 +52,20 @@ public class ContentService {
 
     public BootcampResponseDTO createBootcamp(CreateBootcampDTO createBootcampDTO){
 
-        Set<Content> teste = new HashSet<>();
+        Set<Content> listOfContents = new HashSet<>();
 
         int duration = 0;
 
         for (UUID id : createBootcampDTO.contentList()){
             var content = this.contentRepository.findById(id).orElseThrow(ContentNotFound::new);
-            teste.add(content);
+            listOfContents.add(content);
         }
 
-        for (Content content : teste) {
+        for (Content content : listOfContents) {
             duration += content.getDuration();
         }
 
-        var bootcamp = new Bootcamp(createBootcampDTO.description(),duration, teste);
+        var bootcamp = new Bootcamp(createBootcampDTO.description(),duration, listOfContents);
         this.contentRepository.save(bootcamp);
 
         return new BootcampResponseDTO(bootcamp);
