@@ -64,6 +64,10 @@ public class Devs implements Serializable {
         return XP;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public Set<Content> getListOfWatchedContents() {
         return listOfWatchedContents;
     }
