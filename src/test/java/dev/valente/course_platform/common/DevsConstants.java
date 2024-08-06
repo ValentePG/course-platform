@@ -1,5 +1,6 @@
 package dev.valente.course_platform.common;
 
+import dev.valente.course_platform.devs.DTOs.DevsCreationRequestDTO;
 import dev.valente.course_platform.devs.DTOs.DevsRenameDTO;
 import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
 import dev.valente.course_platform.devs.Devs;
@@ -7,6 +8,9 @@ import dev.valente.course_platform.devs.Devs;
 import java.util.UUID;
 
 public class DevsConstants {
+    public static final DevsCreationRequestDTO DEVS_CREATION_REQUEST_DTO =
+            new DevsCreationRequestDTO("GABRIEL", "303030");
+
     public static final Devs DEVS = new Devs("GABRIEL", "303030");
     public static final DevsResponseDTO DEVS_RESPONSE_DTO = new DevsResponseDTO(DEVS);
 
