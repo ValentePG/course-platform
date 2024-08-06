@@ -11,6 +11,9 @@ public class DevsConstants {
     public static final DevsCreationRequestDTO DEVS_CREATION_REQUEST_DTO =
             new DevsCreationRequestDTO("GABRIEL", "303030");
 
+    public static final DevsCreationRequestDTO DEVS_CREATION_REQUEST_DTO_INVALID =
+            new DevsCreationRequestDTO("", "");
+
     public static final Devs DEVS = new Devs("GABRIEL", "303030");
     public static final DevsResponseDTO DEVS_RESPONSE_DTO = new DevsResponseDTO(DEVS);
 

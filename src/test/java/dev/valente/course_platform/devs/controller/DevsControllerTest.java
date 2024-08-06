@@ -1,9 +1,9 @@
 package dev.valente.course_platform.devs.controller;
 
-import static dev.valente.course_platform.common.DevsConstants.DEVS_CREATION_REQUEST_DTO;
-import static dev.valente.course_platform.common.DevsConstants.DEVS_WITH_ID;
+import static dev.valente.course_platform.common.DevsConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -34,16 +34,27 @@ public class DevsControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void testeTeste() throws Exception {
+    public void saveDev_WithValidData_ReturnsCreated() throws Exception {
 
-//        String json = objectMapper.writeValueAsString(DEVS_CREATION_REQUEST_DTO);
-//        DevsCreationRequestDTO devsCreationRequestDTO = objectMapper.readValue(json, DevsCreationRequestDTO.class);
-//
-//        MvcResult mvcResult = mockMvc.perform(post("/api/devs")
-//                .content(json).contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.userName").value(DEVS_CREATION_REQUEST_DTO.userName()))
-//                .andReturn();
+        when(devsService.saveDev(DEVS_CREATION_REQUEST_DTO)).thenReturn(DEVS_RESPONSE_DTO_WITH_ID);
+
+        mockMvc.perform(post("/api/devs")
+                .content(objectMapper.writeValueAsString(DEVS_CREATION_REQUEST_DTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.userName").value(DEVS_CREATION_REQUEST_DTO.userName()));
+
+    }
+
+    @Test
+    public void saveDev_WithInvalidData_ReturnsUnprocessableEntity() throws Exception {
+
+        mockMvc.perform(post("/api/devs")
+                        .content(objectMapper.writeValueAsString(DEVS_CREATION_REQUEST_DTO_INVALID))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnprocessableEntity());
+
+
 
     }
 }
