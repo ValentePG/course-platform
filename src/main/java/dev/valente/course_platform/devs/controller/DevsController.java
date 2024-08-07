@@ -69,6 +69,9 @@ public class DevsController {
                     description = "Retorna o desenvolvedor criado"),
             @ApiResponse(responseCode = "400",
                     description = "Quando o usuário já existir, retorna uma BAD REQUEST 400",
+                    content = @Content(schema = @Schema(implementation = RestErrorMessage.class))),
+            @ApiResponse(responseCode = "422",
+                    description = "Quando for inserido valores inválidos, retorna UNPROCESSABLE ENTITY 422",
                     content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
     @PostMapping
     public ResponseEntity<DevsResponseDTO> saveDev(@RequestBody @Valid DevsCreationRequestDTO dev){
@@ -98,6 +101,12 @@ public class DevsController {
                     description = "Retorna o desenvolvedor com username renomeado"),
             @ApiResponse(responseCode = "404",
                     description = "Quando não encontrar o desenvolvedor, retorna um NOT FOUND 404",
+                    content = @Content(schema = @Schema(implementation = RestErrorMessage.class))),
+            @ApiResponse(responseCode = "422",
+                    description = "Quando for inserido valores inválidos, retorna UNPROCESSABLE ENTITY 422",
+                    content = @Content(schema = @Schema(implementation = RestErrorMessage.class))),
+            @ApiResponse(responseCode = "400",
+                    description = "Quando o novo nome a ser inserido ja existir, retorna BAD REQUEST 404",
                     content = @Content(schema = @Schema(implementation = RestErrorMessage.class)))})
     @PutMapping("/{id}")
     public ResponseEntity<DevsResponseDTO> renameDev(@PathVariable("id") UUID id,

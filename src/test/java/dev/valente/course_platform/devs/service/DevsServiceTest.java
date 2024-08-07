@@ -108,7 +108,7 @@ public class DevsServiceTest {
 
 
         // Act
-        var sut = this.devsService.renameDev(DEVS_TO_RENAME.getId(), DEVS_RENAME_DTO);
+        var sut = this.devsService.renameDev(DEVS_TO_RENAME.getId(), DEVS_RENAME_DTO_VALID);
 
 
         // Asserts
@@ -123,7 +123,7 @@ public class DevsServiceTest {
         when(devsRepository.findById(DEVS_WITH_ID.getId())).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThatThrownBy(() -> this.devsService.renameDev(DEVS_WITH_ID.getId(), DEVS_RENAME_DTO))
+        assertThatThrownBy(() -> this.devsService.renameDev(DEVS_WITH_ID.getId(), DEVS_RENAME_DTO_VALID))
                 .isInstanceOf(DevNotFound.class);
 
     }
@@ -134,10 +134,10 @@ public class DevsServiceTest {
 
         // Arrange
         when(devsRepository.findById(DEVS_WITH_ID.getId())).thenReturn(Optional.of(DEVS_WITH_ID));
-        when(devsRepository.findDevsByUserName(DEVS_RENAME_DTO.userName())).thenReturn(Optional.of(DEVS));
+        when(devsRepository.findDevsByUserName(DEVS_RENAME_DTO_VALID.userName())).thenReturn(Optional.of(DEVS));
 
         // Act & Assert
-        assertThatThrownBy(() -> this.devsService.renameDev(DEVS_WITH_ID.getId(), DEVS_RENAME_DTO))
+        assertThatThrownBy(() -> this.devsService.renameDev(DEVS_WITH_ID.getId(), DEVS_RENAME_DTO_VALID))
                 .isInstanceOf(UserNameAlreadyExists.class);
 
     }
