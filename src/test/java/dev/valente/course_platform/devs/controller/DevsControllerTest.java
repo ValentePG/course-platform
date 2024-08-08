@@ -1,10 +1,10 @@
 package dev.valente.course_platform.devs.controller;
 
 import static dev.valente.course_platform.common.DevsConstants.*;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
+//import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -15,7 +15,6 @@ import dev.valente.course_platform.devs.exceptions.DevNotFound;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
 import dev.valente.course_platform.devs.service.DevsService;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -40,6 +39,29 @@ public class DevsControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Test
+    public void getAllDevs_WhenNoDeveloperIsRegistered_ReturnsVoidListOfDevsResponseDTO() throws Exception {
+
+        mockMvc.perform(get("/api/devs"))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$").isEmpty())
+                        .andDo(print());
+
+
+    }
+
+    @Test
+    public void getAllDevs_WhenAtLeastOneDeveloperIsRegistered_ReturnsListOfDevsResponseDTO() throws Exception {
+
+        when(devsService.getAllDevs()).thenReturn(List.of(DEVS_RESPONSE_DTO_WITH_ID));
+
+        mockMvc.perform(get("/api/devs"))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$").hasJsonPath())
+                        .andDo(print());
+
+    }
 
     @Test
     public void saveDev_WithValidData_ReturnsCreatedAndDevsResponseDTO() throws Exception {
@@ -80,28 +102,6 @@ public class DevsControllerTest {
 
     }
 
-    @Test
-    public void getAllDevs_WhenNoDeveloperIsRegistered_ReturnsVoidListOfDevsResponseDTO() throws Exception {
-
-        mockMvc.perform(get("/api/devs"))
-                        .andExpect(status().isOk())
-                        .andExpect(jsonPath("$").isEmpty())
-                        .andDo(print());
-
-
-    }
-
-    @Test
-    public void getAllDevs_WhenAtLeastOneDeveloperIsRegistered_ReturnsListOfDevsResponseDTO() throws Exception {
-
-        when(devsService.getAllDevs()).thenReturn(List.of(DEVS_RESPONSE_DTO_WITH_ID));
-
-        mockMvc.perform(get("/api/devs"))
-                        .andExpect(status().isOk())
-                        .andExpect(jsonPath("$").hasJsonPath())
-                        .andDo(print());
-
-    }
 
 
     @Test

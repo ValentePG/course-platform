@@ -1,7 +1,6 @@
 package dev.valente.course_platform.devs.service;
 
 
-import dev.valente.course_platform.devs.DTOs.DevsCreationRequestDTO;
 import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
 import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
@@ -14,12 +13,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static dev.valente.course_platform.common.DevsConstants.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -36,20 +37,43 @@ public class DevsServiceTest {
     private DevsService devsService;
 
     @Test
+    @DisplayName("Should return void list of DevsResponseDTO")
+    void getAllDevs_WhenNoDeveloperIsRegistered_ReturnsVoidListOfResponseDTO(){
+
+        when(devsRepository.findAll()).thenReturn(Collections.emptyList());
+
+        List<DevsResponseDTO> sut = this.devsService.getAllDevs();
+
+        assertThat(sut.isEmpty()).isTrue();
+
+    }
+
+    @Test
+    @DisplayName("Should return list of DevsResponseDTO")
+    void getAllDevs_WhenAtLeastOneDeveloperIsRegistered_ReturnsListOfResponseDTO(){
+
+        when(devsRepository.findAll()).thenReturn(List.of(DEVS_WITH_ID));
+
+        List<DevsResponseDTO> sut = this.devsService.getAllDevs();
+
+        assertThat(sut.isEmpty()).isFalse();
+    }
+
+    @Test
     @DisplayName("Should save Dev successfuly")
     void saveDev_WithValidData_ReturnsDev(){
 
         // Arrange
-        var devsCreationRequestDTO = new DevsCreationRequestDTO(DEVS.getUserName(), DEVS.getPassword());
-        when(devsRepository.findDevsByUserName(devsCreationRequestDTO.userName())).thenReturn(Optional.empty());
+        when(devsRepository.findDevsByUserName(DEVS_CREATION_REQUEST_DTO_VALID.userName()))
+                .thenReturn(Optional.empty());
 
         // Act
-        DevsResponseDTO sut = this.devsService.saveDev(devsCreationRequestDTO);
+        DevsResponseDTO sut = this.devsService.saveDev(DEVS_CREATION_REQUEST_DTO_VALID);
 
         // Asserts
         assertThat(sut).isEqualTo(DEVS_RESPONSE_DTO);
         verify(devsRepository, times(1))
-                .findDevsByUserName(devsCreationRequestDTO.userName());
+                .findDevsByUserName(DEVS_CREATION_REQUEST_DTO_VALID.userName());
         verify(devsRepository, times(1))
                 .save(any(Devs.class));
     }
@@ -61,12 +85,13 @@ public class DevsServiceTest {
         // AAA
 
         // Arrange
-        var devsCreationRequestDTO = new DevsCreationRequestDTO(DEVS.getUserName(), DEVS.getPassword());
-        when(devsRepository.findDevsByUserName(devsCreationRequestDTO.userName())).thenReturn(Optional.of(DEVS));
+
+        when(devsRepository.findDevsByUserName(DEVS_CREATION_REQUEST_DTO_VALID.userName()))
+                .thenReturn(Optional.of(DEVS));
 
         // Act & Asserts
 
-        assertThatThrownBy(() -> this.devsService.saveDev(devsCreationRequestDTO))
+        assertThatThrownBy(() -> this.devsService.saveDev(DEVS_CREATION_REQUEST_DTO_VALID))
                 .isInstanceOf(UserNameAlreadyExists.class);
 
     }
@@ -105,6 +130,7 @@ public class DevsServiceTest {
 
         // Arrange
         when(devsRepository.findById(DEVS_TO_RENAME.getId())).thenReturn(Optional.of(DEVS_TO_RENAME));
+        when(devsRepository.findDevsByUserName(DEVS_RENAME_DTO_VALID.userName())).thenReturn(Optional.empty());
 
 
         // Act
@@ -120,10 +146,10 @@ public class DevsServiceTest {
     void renameDev_WhenDevNotFound_ThrowsException() {
 
         // Arrange
-        when(devsRepository.findById(DEVS_WITH_ID.getId())).thenReturn(Optional.empty());
+        when(devsRepository.findById(DEVS_TO_RENAME.getId())).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThatThrownBy(() -> this.devsService.renameDev(DEVS_WITH_ID.getId(), DEVS_RENAME_DTO_VALID))
+        assertThatThrownBy(() -> this.devsService.renameDev(DEVS_TO_RENAME.getId(), DEVS_RENAME_DTO_VALID))
                 .isInstanceOf(DevNotFound.class);
 
     }

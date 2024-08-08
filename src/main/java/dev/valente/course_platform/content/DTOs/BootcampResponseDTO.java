@@ -3,12 +3,12 @@ package dev.valente.course_platform.content.DTOs;
 import dev.valente.course_platform.content.concreteContent.Bootcamp;
 import dev.valente.course_platform.devs.DTOs.ContentIntoDevsDTO;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 public record BootcampResponseDTO(UUID id, String description, Integer duration,
-                                  Date date, List<DevsIntoContentDTO> listOfDevs,
+                                  LocalDate date, List<DevsIntoContentDTO> listOfDevs,
                                   List<DevsIntoContentDTO> listOfDevsWhoWatched,
                                   List<ContentIntoDevsDTO> listOfContentRegistered) {
 

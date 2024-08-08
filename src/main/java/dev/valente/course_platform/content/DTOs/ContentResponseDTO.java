@@ -2,12 +2,12 @@ package dev.valente.course_platform.content.DTOs;
 
 import dev.valente.course_platform.content.Content;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 public record ContentResponseDTO(UUID id, String description, Integer duration,
-                                 Date date, List<DevsIntoContentDTO> listOfDevs,
+                                 LocalDate date, List<DevsIntoContentDTO> listOfDevs,
                                  List<DevsIntoContentDTO> listOfDevsWhoWatched, String url) {
 
     public ContentResponseDTO(Content content){

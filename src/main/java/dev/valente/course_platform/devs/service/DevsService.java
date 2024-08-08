@@ -79,7 +79,7 @@ public class DevsService {
             this.devsRepository.deleteContentWatched(id);
         }
 
-        this.devsRepository.delete(devResearched);
+        this.devsRepository.deleteById(devResearched.getId());
         return devsResponseDTO;
 
     }

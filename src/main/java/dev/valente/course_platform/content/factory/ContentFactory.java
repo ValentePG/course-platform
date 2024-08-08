@@ -16,12 +16,10 @@ public class ContentFactory {
         if(contentRequest.duration() <= 30){
             return new Course(contentRequest.description(),
                     contentRequest.duration(),
-                    new Date(),
                     contentRequest.url());
         } else {
             return new Mentoring(contentRequest.description(),
                     contentRequest.duration(),
-                    new Date(),
                     contentRequest.url());
         }
     }

@@ -5,6 +5,7 @@ import dev.valente.course_platform.devs.Devs;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +27,7 @@ public abstract class Content implements Serializable {
     protected Integer duration;
 
     @Column
-    protected Date dataOfCreation;
+    protected LocalDate dataOfCreation;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(fetch = FetchType.LAZY)
@@ -67,7 +68,7 @@ public abstract class Content implements Serializable {
         this.duration = duration;
     }
 
-    public Date getDataOfCreation() {
+    public LocalDate getDataOfCreation() {
         return dataOfCreation;
     }
 

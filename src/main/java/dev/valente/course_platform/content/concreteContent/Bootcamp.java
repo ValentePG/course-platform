@@ -2,9 +2,9 @@ package dev.valente.course_platform.content.concreteContent;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
-import dev.valente.course_platform.content.DTOs.CreateBootcampDTO;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -19,7 +19,7 @@ public class Bootcamp extends Content{
         super();
         this.description = description;
         this.duration = duration;
-        this.dataOfCreation = new Date();
+        this.dataOfCreation = LocalDate.now();
         this.listOfContents = listOfContents;
     }
 

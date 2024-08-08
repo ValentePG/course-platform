@@ -9,9 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.jdbc.Sql;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -30,6 +33,24 @@ public class DevsRepositoryTest {
     public void AfterEach(){
         DEVS.setId(null);
 
+    }
+
+    @Test
+    public void findAll_WhenNoDeveloperIsRegistered_ReturnsVoidListOfDevs(){
+
+        List<Devs> listDevs = devsRepository.findAll();
+
+        assertThat(listDevs).isEmpty();
+
+    }
+
+    @Sql(scripts = "/import_devs.sql")
+    @Test
+    public void findAll_WhenAtLeastOneDeveloperIsRegistered_ReturnsListOfDevs(){
+        List<Devs> listDevs = devsRepository.findAll();
+
+        assertThat(listDevs).isNotEmpty();
+        assertThat(listDevs.size()).isEqualTo(4);
     }
 
     @Test
@@ -109,7 +130,17 @@ public class DevsRepositoryTest {
         assertThat(devsTest).isEmpty();
     }
 
-    //DELETE
 
+    @Test
+    public void deleteById_WithIdExistent_ReturnsDevsDeleted(){
+        Devs devs = testEntityManager.persistAndFlush(DEVS);
+
+        devsRepository.deleteById(devs.getId());
+
+        Devs removedDevs = testEntityManager.find(Devs.class, devs.getId());
+
+        assertThat(removedDevs).isNull();
+
+    }
 
 }

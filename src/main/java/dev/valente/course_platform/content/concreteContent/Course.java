@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,11 +19,11 @@ public class Course extends Content {
     private Set<Bootcamp> listOfBootcamp = new HashSet<>();
 
     public Course(){}
-    public Course(String description, Integer duration, Date date, String url) {
+    public Course(String description, Integer duration, String url) {
         super();
         this.description = description;
         this.duration = duration;
-        this.dataOfCreation = date;
+        this.dataOfCreation = LocalDate.now();
         this.url = url;
     }
 
