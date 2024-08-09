@@ -70,7 +70,7 @@ public class DevsService {
         var devsResponseDTO = new DevsResponseDTO(devResearched);
 
         // Cache
-        cacheService.evictCache(devResearched.getClass().getSimpleName().toLowerCase(), devResearched.getId());
+//        cacheService.evictCache(devResearched.getClass().getSimpleName().toLowerCase(), devResearched.getId());
 
         if(!devResearched.getListOfContentsRegistered().isEmpty()){
             this.devsRepository.deleteContentRegistered(id);
