@@ -44,7 +44,7 @@ public class DevsRepositoryTest {
 
     }
 
-    @Sql(scripts = "/import_devs.sql")
+    @Sql(scripts = "/import_devsh2.sql")
     @Test
     public void findAll_WhenAtLeastOneDeveloperIsRegistered_ReturnsListOfDevs(){
         List<Devs> listDevs = devsRepository.findAll();

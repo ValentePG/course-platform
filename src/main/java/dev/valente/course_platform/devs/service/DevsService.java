@@ -32,7 +32,7 @@ public class DevsService {
                 DevsResponseDTO::new).toList();
     }
 
-    @Cacheable(key = "#id")
+//    @Cacheable(key = "#id")
     public DevsResponseDTO findDevById(UUID id) {
 
         Devs devResearched = this.devsRepository.findById(id).orElseThrow(
@@ -40,7 +40,7 @@ public class DevsService {
         return new DevsResponseDTO(devResearched);
     }
 
-    @Cacheable(key = "#userName")
+//    @Cacheable(key = "#userName")
     public DevsResponseDTO findDevByUserName(String userName) {
 
         Devs devResearched = this.devsRepository.findDevsByUserName(

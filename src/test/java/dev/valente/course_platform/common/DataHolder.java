@@ -1,15 +1,13 @@
 package dev.valente.course_platform.common;
 
-import org.springframework.stereotype.Component;
-
 import java.util.UUID;
 
-public class HolderData {
+public class DataHolder {
     private UUID id;
 
     private String userName;
 
-    public HolderData(){
+    public DataHolder(){
     }
 
     public String getUserName() {

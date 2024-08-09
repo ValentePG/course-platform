@@ -26,7 +26,7 @@ public class Devs implements Serializable {
     private String userName;
 
     @NotEmpty
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String password;
 
     @Column

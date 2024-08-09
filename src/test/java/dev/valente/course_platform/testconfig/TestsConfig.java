@@ -1,7 +1,7 @@
-package dev.valente.course_platform;
+package dev.valente.course_platform.testconfig;
 
 
-import dev.valente.course_platform.common.HolderData;
+import dev.valente.course_platform.common.DataHolder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
@@ -15,7 +15,7 @@ public class TestsConfig {
     }
 
     @Bean
-    public HolderData aux(){
-        return new HolderData();
+    public DataHolder dataHolder(){
+        return new DataHolder();
     }
 }
