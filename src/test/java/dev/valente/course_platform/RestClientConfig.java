@@ -1,7 +1,7 @@
 package dev.valente.course_platform;
 
 
-import dev.valente.course_platform.devs.Aux;
+import dev.valente.course_platform.common.HolderData;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
@@ -15,7 +15,7 @@ public class RestClientConfig {
     }
 
     @Bean
-    public Aux aux(){
-        return new Aux();
+    public HolderData aux(){
+        return new HolderData();
     }
 }

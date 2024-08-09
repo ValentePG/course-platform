@@ -7,13 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestClient;
 
-import java.util.UUID;
-
 import static dev.valente.course_platform.common.DevsConstants.*;
-import dev.valente.course_platform.devs.Aux;
+import dev.valente.course_platform.common.HolderData;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("it")
@@ -25,7 +22,7 @@ public class DevsIT {
     private RestClient restClient;
 
     @Autowired
-    private Aux aux;
+    private HolderData aux;
 
     @Test
     public void saveDev_ReturnsCreated(){
