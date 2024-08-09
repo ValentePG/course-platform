@@ -5,7 +5,7 @@ target/
 !**/src/test/**/target/
 
 application.properties
-src/test/resources/application-test.properties
+src/test/resources/application-it.properties
 
 maven-wrapper.properties
 mvnw

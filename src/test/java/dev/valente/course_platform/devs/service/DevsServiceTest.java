@@ -101,7 +101,7 @@ public class DevsServiceTest {
     void deleteDev_WhenDevFound_ReturnsDev() {
         // Arrange
         when(devsRepository.findById(DEVS_WITH_ID.getId())).thenReturn(Optional.of(DEVS_WITH_ID));
-        doNothing().when(cacheService).evictCache(DEVS_WITH_ID.getClass().getSimpleName().toLowerCase(), DEVS_WITH_ID.getId());
+//        doNothing().when(cacheService).evictCache(DEVS_WITH_ID.getClass().getSimpleName().toLowerCase(), DEVS_WITH_ID.getId());
 
         // Act
         var sut = this.devsService.deleteDev(DEVS_WITH_ID.getId());
