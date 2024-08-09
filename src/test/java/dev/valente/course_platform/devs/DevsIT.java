@@ -6,6 +6,8 @@ import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestClient;
 
@@ -27,30 +29,37 @@ public class DevsIT {
     @Test
     public void saveDev_ReturnsCreated(){
 
-        var teste = restClient
+        ResponseEntity<DevsResponseDTO> teste = restClient
                 .post()
                 .uri("http://localhost:8081/api/devs")
                 .body(DEVS_CREATION_REQUEST_DTO_VALID)
                 .retrieve()
-                .toEntity(DevsResponseDTO.class).getBody();
+                .toEntity(DevsResponseDTO.class);
 
-        this.aux.setId(teste.id());
-        this.aux.setUserName(teste.userName());
+        var response = teste.getBody();
+
+        this.aux.setId(response.id());
+        this.aux.setUserName(response.userName());
+
         String Output = String.format("Usuário %s foi criado com sucesso!", this.aux.getUserName());
         System.out.println(Output);
-        assertThat(teste).isInstanceOf(DevsResponseDTO.class);
-        assertThat(teste.userName()).isEqualTo(DEVS_CREATION_REQUEST_DTO_VALID.userName());
+
+        assertThat(teste.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     }
 
     @Test
     public void delete_ReturnsNoContent(){
 
-        var teste = restClient
+        ResponseEntity<Void> teste = restClient
                 .delete()
                 .uri("http://localhost:8081/api/devs/{id}", this.aux.getId())
-                .retrieve();
+                .retrieve()
+                .toBodilessEntity();
+
         String Output = String.format("Usuário %s foi deletado com sucesso!", this.aux.getUserName());
         System.out.println(Output);
-        assertThat(teste.toBodilessEntity().getStatusCode().is2xxSuccessful()).isTrue();
+
+        assertThat(teste.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
     }
 }
