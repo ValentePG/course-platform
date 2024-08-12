@@ -78,7 +78,7 @@ public class DevsIT {
 
         var response = teste.getBody();
 
-//        assertThat(response.userName()).isEqualTo("JOHN");
+        assertThat(response.userName()).isEqualTo("JOHN");
         assertThat(response).isInstanceOf(DevsResponseDTO.class);
         assertThat(teste.getStatusCode()).isEqualTo(HttpStatus.OK);
     }

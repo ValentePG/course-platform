@@ -65,8 +65,17 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-testcontainers</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.testcontainers</groupId>-->
+<!--			<artifactId>junit-jupiter</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 	</dependencies>
+
 
 	<build>
 		<plugins>
@@ -74,7 +83,68 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!-- Plugins que separam os testes -->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-surefire-plugin</artifactId>-->
+<!--				<version>3.3.1</version>-->
+<!--			</plugin>-->
+
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>3.3.1</version>
+					<scope>test</scope>-->
+<!--			</plugin>-->
+
+				<!-- Teste de cobertura -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.12</version>
+				<configuration>
+					<excludes>
+						<exclude>dev/valente/course_platform/CoursePlatformApplication.class</exclude>
+						<exclude>dev/valente/course_platform/content/**</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Teste Mutantes -->
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.16.1</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>1.2.1</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<targetTests>
+						<param>dev.valente.course_platform.*Test</param>
+					</targetTests>
+					<excludedClasses>
+						<param>dev.valente.course_platform.devs.Devs</param>
+						<param>dev.valente.course_platform.content.*</param>
+					</excludedClasses>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>
