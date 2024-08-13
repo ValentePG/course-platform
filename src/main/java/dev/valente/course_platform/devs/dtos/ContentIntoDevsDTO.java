@@ -1,4 +1,4 @@
-package dev.valente.course_platform.devs.DTOs;
+package dev.valente.course_platform.devs.dtos;
 
 import java.util.UUID;
 

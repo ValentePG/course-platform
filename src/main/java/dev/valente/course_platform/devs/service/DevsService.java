@@ -1,8 +1,8 @@
 package dev.valente.course_platform.devs.service;
 
-import dev.valente.course_platform.devs.DTOs.DevsCreationRequestDTO;
-import dev.valente.course_platform.devs.DTOs.DevsRenameDTO;
-import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
+import dev.valente.course_platform.devs.dtos.DevsCreationRequestDTO;
+import dev.valente.course_platform.devs.dtos.DevsRenameDTO;
+import dev.valente.course_platform.devs.dtos.DevsResponseDTO;
 import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
 import dev.valente.course_platform.devs.exceptions.DevNotFound;
@@ -10,7 +10,6 @@ import dev.valente.course_platform.devs.repository.DevsRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

@@ -5,6 +5,9 @@ target/
 !**/src/test/**/target/
 
 application.properties
+application.yml
+docker-compose.yml
+
 src/test/resources/application-it.properties
 
 maven-wrapper.properties

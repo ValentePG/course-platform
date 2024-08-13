@@ -1,4 +1,4 @@
-package dev.valente.course_platform.content.DTOs;
+package dev.valente.course_platform.content.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

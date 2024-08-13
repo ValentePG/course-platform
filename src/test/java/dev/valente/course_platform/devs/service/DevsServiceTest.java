@@ -1,7 +1,7 @@
 package dev.valente.course_platform.devs.service;
 
 
-import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
+import dev.valente.course_platform.devs.dtos.DevsResponseDTO;
 import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
 import dev.valente.course_platform.devs.exceptions.DevNotFound;
@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

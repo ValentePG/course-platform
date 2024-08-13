@@ -1,6 +1,6 @@
 package dev.valente.course_platform.devs.service;
 
-import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
+import dev.valente.course_platform.devs.dtos.DevsResponseDTO;
 import org.springframework.cache.CacheManager;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

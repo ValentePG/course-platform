@@ -1,7 +1,7 @@
-package dev.valente.course_platform.content.DTOs;
+package dev.valente.course_platform.content.dtos;
 
 import dev.valente.course_platform.content.concreteContent.Bootcamp;
-import dev.valente.course_platform.devs.DTOs.ContentIntoDevsDTO;
+import dev.valente.course_platform.devs.dtos.ContentIntoDevsDTO;
 
 import java.time.LocalDate;
 import java.util.List;

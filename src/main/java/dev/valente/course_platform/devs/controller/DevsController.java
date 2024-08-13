@@ -1,8 +1,8 @@
 package dev.valente.course_platform.devs.controller;
 
-import dev.valente.course_platform.devs.DTOs.DevsCreationRequestDTO;
-import dev.valente.course_platform.devs.DTOs.DevsRenameDTO;
-import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
+import dev.valente.course_platform.devs.dtos.DevsCreationRequestDTO;
+import dev.valente.course_platform.devs.dtos.DevsRenameDTO;
+import dev.valente.course_platform.devs.dtos.DevsResponseDTO;
 import dev.valente.course_platform.devs.service.DevsService;
 import dev.valente.course_platform.infra.RestErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;

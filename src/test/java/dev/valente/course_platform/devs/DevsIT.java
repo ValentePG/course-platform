@@ -2,7 +2,7 @@ package dev.valente.course_platform.devs;
 
 
 
-import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
+import dev.valente.course_platform.devs.dtos.DevsResponseDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

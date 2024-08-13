@@ -1,10 +1,10 @@
 package dev.valente.course_platform.content.service;
 
 import dev.valente.course_platform.content.Content;
-import dev.valente.course_platform.content.DTOs.BootcampResponseDTO;
-import dev.valente.course_platform.content.DTOs.ContentCreationRequestDTO;
-import dev.valente.course_platform.content.DTOs.ContentResponseDTO;
-import dev.valente.course_platform.content.DTOs.CreateBootcampDTO;
+import dev.valente.course_platform.content.dtos.BootcampResponseDTO;
+import dev.valente.course_platform.content.dtos.ContentCreationRequestDTO;
+import dev.valente.course_platform.content.dtos.ContentResponseDTO;
+import dev.valente.course_platform.content.dtos.CreateBootcampDTO;
 import dev.valente.course_platform.content.concreteContent.Bootcamp;
 import dev.valente.course_platform.content.exceptions.ContentAlreadyExists;
 import dev.valente.course_platform.content.exceptions.ContentNotFound;

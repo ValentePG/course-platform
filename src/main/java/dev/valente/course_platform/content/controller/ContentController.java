@@ -1,9 +1,9 @@
 package dev.valente.course_platform.content.controller;
 
-import dev.valente.course_platform.content.DTOs.BootcampResponseDTO;
-import dev.valente.course_platform.content.DTOs.ContentCreationRequestDTO;
-import dev.valente.course_platform.content.DTOs.ContentResponseDTO;
-import dev.valente.course_platform.content.DTOs.CreateBootcampDTO;
+import dev.valente.course_platform.content.dtos.BootcampResponseDTO;
+import dev.valente.course_platform.content.dtos.ContentCreationRequestDTO;
+import dev.valente.course_platform.content.dtos.ContentResponseDTO;
+import dev.valente.course_platform.content.dtos.CreateBootcampDTO;
 import dev.valente.course_platform.content.service.ContentService;
 import dev.valente.course_platform.infra.RestErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;

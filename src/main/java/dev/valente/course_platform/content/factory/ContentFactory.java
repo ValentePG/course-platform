@@ -2,11 +2,9 @@ package dev.valente.course_platform.content.factory;
 
 
 import dev.valente.course_platform.content.Content;
-import dev.valente.course_platform.content.DTOs.ContentCreationRequestDTO;
+import dev.valente.course_platform.content.dtos.ContentCreationRequestDTO;
 import dev.valente.course_platform.content.concreteContent.Course;
 import dev.valente.course_platform.content.concreteContent.Mentoring;
-
-import java.util.Date;
 
 public class ContentFactory {
 

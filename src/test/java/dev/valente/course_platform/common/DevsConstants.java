@@ -1,8 +1,8 @@
 package dev.valente.course_platform.common;
 
-import dev.valente.course_platform.devs.DTOs.DevsCreationRequestDTO;
-import dev.valente.course_platform.devs.DTOs.DevsRenameDTO;
-import dev.valente.course_platform.devs.DTOs.DevsResponseDTO;
+import dev.valente.course_platform.devs.dtos.DevsCreationRequestDTO;
+import dev.valente.course_platform.devs.dtos.DevsRenameDTO;
+import dev.valente.course_platform.devs.dtos.DevsResponseDTO;
 import dev.valente.course_platform.devs.Devs;
 
 import java.util.UUID;
