@@ -50,9 +50,6 @@ public class DevsIT {
         this.dataHolder.setId(response.id());
         this.dataHolder.setUserName(response.userName());
 
-        String Output = String.format("Usuário %s foi criado com sucesso!", response.userName());
-        System.out.println(Output);
-
         assertThat(response.id()).isNotNull();
         assertThat(response.userName()).isEqualTo(DEVS_CREATION_REQUEST_DTO_VALID.userName());
         assertThat(response).isInstanceOf(DevsResponseDTO.class);

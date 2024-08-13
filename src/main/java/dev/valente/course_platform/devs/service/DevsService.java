@@ -7,17 +7,23 @@ import dev.valente.course_platform.devs.Devs;
 import dev.valente.course_platform.devs.exceptions.UserNameAlreadyExists;
 import dev.valente.course_platform.devs.exceptions.DevNotFound;
 import dev.valente.course_platform.devs.repository.DevsRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
+
 
 @Service
 @CacheConfig(cacheNames = "devs")
 public class DevsService {
 
+    private static final Logger log = LogManager.getLogger(DevsService.class);
     private final DevsRepository devsRepository;
     private final CacheService cacheService;
 
@@ -60,6 +66,12 @@ public class DevsService {
 
         var requestDevData = new Devs(dev.userName().toUpperCase(), dev.password());
         this.devsRepository.save(requestDevData);
+
+        // Abstrair para uma classe Util
+        log.info(String.format("Usuário %s salvo com sucesso " +
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                        .format(LocalDateTime.now()), requestDevData.getUserName()));
+
         return new DevsResponseDTO(requestDevData);
 
     }
