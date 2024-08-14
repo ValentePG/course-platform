@@ -7,6 +7,8 @@ import dev.valente.course_platform.content.concreteContent.Course;
 import dev.valente.course_platform.content.concreteContent.Mentoring;
 
 public class ContentFactory {
+    private ContentFactory() {
+    }
 
     public static Content createContent(ContentCreationRequestDTO contentRequest){
 
