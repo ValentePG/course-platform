@@ -25,35 +25,35 @@ import java.security.interfaces.RSAPublicKey;
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    @Value("${jwt.public.key}")
-//    private RSAPublicKey key;
-//
-//    @Value("${jwt.private.key}")
-//    private RSAPrivateKey priv;
-//
-//    @Bean
-//    SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-//        http.csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(
-//                    auth -> auth.requestMatchers("/authenticate").permitAll()
-//                        .anyRequest().authenticated())
-//                .httpBasic(Customizer.withDefaults())
-//                .oauth2ResourceServer(
-//                    conf -> conf.jwt(Customizer.withDefaults()));
-//        return http.build();
-//    }
-//
-//    @Bean
-//    JwtDecoder jwtDecoder(){
-//        return NimbusJwtDecoder.withPublicKey(key).build();
-//    }
-//
-//    @Bean
-//    JwtEncoder jwtEncoder(){
-//        var jwk = new RSAKey.Builder(key).privateKey(priv).build();
-//        var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-//        return new NimbusJwtEncoder(jwks);
-//    }
+    @Value("${jwt.public.key}")
+    private RSAPublicKey key;
+
+    @Value("${jwt.private.key}")
+    private RSAPrivateKey priv;
+
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                    auth -> auth.requestMatchers("/authenticate").permitAll()
+                        .anyRequest().authenticated())
+                .httpBasic(Customizer.withDefaults())
+                .oauth2ResourceServer(
+                    conf -> conf.jwt(Customizer.withDefaults()));
+        return http.build();
+    }
+
+    @Bean
+    JwtDecoder jwtDecoder(){
+        return NimbusJwtDecoder.withPublicKey(key).build();
+    }
+
+    @Bean
+    JwtEncoder jwtEncoder(){
+        var jwk = new RSAKey.Builder(key).privateKey(priv).build();
+        var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+        return new NimbusJwtEncoder(jwks);
+    }
 
     // Atenção!
     @Bean
