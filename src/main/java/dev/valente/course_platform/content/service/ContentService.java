@@ -112,7 +112,7 @@ public class ContentService {
 
         contentResearched.getListOfDevsWhoWatched().add(devResearched);
         devResearched.getListOfWatchedContents().add(contentResearched);
-        devResearched.setXP(devResearched.getXP() + 50);
+        devResearched.setXp(devResearched.getXp() + 50);
 
         this.devsRepository.save(devResearched);
         this.contentRepository.save(contentResearched);
