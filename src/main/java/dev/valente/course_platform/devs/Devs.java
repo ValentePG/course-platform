@@ -3,8 +3,6 @@ package dev.valente.course_platform.devs;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 
@@ -30,7 +28,7 @@ public class Devs implements Serializable {
     private String password;
 
     @Column
-    private Double XP = 0.0;
+    private Double xp = 0.0;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(fetch = FetchType.LAZY)
@@ -60,8 +58,8 @@ public class Devs implements Serializable {
         return listOfContentsRegistered;
     }
 
-    public Double getXP() {
-        return XP;
+    public Double getXp() {
+        return xp;
     }
 
     public void setId(UUID id) {
@@ -76,8 +74,8 @@ public class Devs implements Serializable {
         this.listOfWatchedContents = listOfWatchedContents;
     }
 
-    public void setXP(Double XP) {
-        this.XP = XP;
+    public void setXp(Double xp) {
+        this.xp = xp;
     }
 
     public String getUserName() {
@@ -107,7 +105,7 @@ public class Devs implements Serializable {
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
-                ", XP=" + XP +
+                ", xp=" + xp +
                 ", listOfWatchedContents=" + listOfWatchedContents +
                 ", listOfContentsRegistered=" + listOfContentsRegistered +
                 '}';

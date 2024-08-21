@@ -1,4 +1,4 @@
-package dev.valente.course_platform.content.concreteContent;
+package dev.valente.course_platform.content.concrete_content;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.valente.course_platform.content.Content;

@@ -5,7 +5,7 @@ import dev.valente.course_platform.content.dtos.BootcampResponseDTO;
 import dev.valente.course_platform.content.dtos.ContentCreationRequestDTO;
 import dev.valente.course_platform.content.dtos.ContentResponseDTO;
 import dev.valente.course_platform.content.dtos.CreateBootcampDTO;
-import dev.valente.course_platform.content.concreteContent.Bootcamp;
+import dev.valente.course_platform.content.concrete_content.Bootcamp;
 import dev.valente.course_platform.content.exceptions.ContentAlreadyExists;
 import dev.valente.course_platform.content.exceptions.ContentNotFound;
 import dev.valente.course_platform.content.factory.ContentFactory;
@@ -112,7 +112,7 @@ public class ContentService {
 
         contentResearched.getListOfDevsWhoWatched().add(devResearched);
         devResearched.getListOfWatchedContents().add(contentResearched);
-        devResearched.setXP(devResearched.getXP() + 50);
+        devResearched.setXp(devResearched.getXp() + 50);
 
         this.devsRepository.save(devResearched);
         this.contentRepository.save(contentResearched);

@@ -13,7 +13,7 @@ public record DevsResponseDTO(UUID id, String userName, List<ContentIntoDevsDTO>
         this(devs.getId(), devs.getUserName(),
                 devs.getListOfContentsRegistered().stream().map(t -> new ContentIntoDevsDTO(t.getId())).toList(),
                 devs.getListOfWatchedContents().stream().map(t -> new ContentIntoDevsDTO(t.getId())).toList() ,
-                devs.getXP());
+                devs.getXp());
     }
 
 }

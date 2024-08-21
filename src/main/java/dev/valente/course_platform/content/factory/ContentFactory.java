@@ -3,8 +3,8 @@ package dev.valente.course_platform.content.factory;
 
 import dev.valente.course_platform.content.Content;
 import dev.valente.course_platform.content.dtos.ContentCreationRequestDTO;
-import dev.valente.course_platform.content.concreteContent.Course;
-import dev.valente.course_platform.content.concreteContent.Mentoring;
+import dev.valente.course_platform.content.concrete_content.Course;
+import dev.valente.course_platform.content.concrete_content.Mentoring;
 
 public class ContentFactory {
     private ContentFactory() {
