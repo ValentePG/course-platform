@@ -10,6 +10,8 @@ import dev.valente.course_platform.devs.repository.DevsRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,10 +27,12 @@ public class DevsService {
     private static final Logger log = LogManager.getLogger(DevsService.class);
     private final DevsRepository devsRepository;
     private final CacheService cacheService;
+    private final PasswordEncoder passwordEncoder;
 
-    public DevsService(DevsRepository devsRepository, CacheService cacheService) {
+    public DevsService(DevsRepository devsRepository, CacheService cacheService, PasswordEncoder passwordEncoder) {
         this.devsRepository = devsRepository;
         this.cacheService = cacheService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<DevsResponseDTO> getAllDevs() {
@@ -63,8 +67,11 @@ public class DevsService {
                     throw new UserNameAlreadyExists();
                 });
 
-        var requestDevData = new Devs(dev.userName().toUpperCase(), dev.password());
+
+        var requestDevData = new Devs(dev.userName().toUpperCase(), passwordEncoder.encode(dev.password()));
         this.devsRepository.save(requestDevData);
+
+//        passwordEncoder.matches(dev.password(), requestDevData.getPassword());
 
         // Abstrair para uma classe Util
         log.info(String.format("Usuário %s salvo com sucesso " +
