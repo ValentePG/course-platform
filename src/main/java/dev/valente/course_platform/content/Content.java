@@ -76,6 +76,8 @@ public abstract class Content implements Serializable {
         return listOfDevsRegistered;
     }
 
+
+    // Não é para existir
     public String getUrl() {
         return null;
     }

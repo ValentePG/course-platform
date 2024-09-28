@@ -15,6 +15,10 @@ mvnw
 mvnw.cmd
 
 Dockerfile
+Dockerfile-nginx
+
+*.conf
+*.html
 
 ### STS ###
 .apt_generated
